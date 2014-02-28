@@ -60,6 +60,7 @@ Asset-management-app
 -	That’s all the configuration for the app is done. You can go back to the first screen and click on the box next to the settings to retrieve the items in the picture library, add an item or update the title or description of an existing item.
 
 All the code that calls into the lists SDK is in the /assetmanagement/src/com/microsoft/assetmanagement/datasource/ListItemsDataSource.java class
+
   o	View the list items – Refer to the getDefaultListViewItems method
   
   o	Add a list item – Refer to saveNewCar method
