@@ -48,12 +48,14 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String fileName = UUID.randomUUID().toString() + ".txt";
-					FileSystemItem targetFolder = client.createFolder(UUID.randomUUID().toString())
+					FileSystemItem targetFolder = client.createFolder(
+							UUID.randomUUID().toString()).get();
+					FileSystemItem fileToCopy = client.createFile(fileName)
 							.get();
-					FileSystemItem fileToCopy = client.createFile(fileName).get();
 
 					String sourcePath = fileToCopy.getName();
-					String destinationPath = targetFolder.getName() + "/" + fileToCopy.getName();
+					String destinationPath = targetFolder.getName() + "/"
+							+ fileToCopy.getName();
 					client.copy(sourcePath, destinationPath, true).get();
 
 					client.getFileSystemItem(destinationPath).get();
@@ -80,12 +82,14 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String fileName = UUID.randomUUID().toString() + ".txt";
-					FileSystemItem targetFolder = client.createFolder(UUID.randomUUID().toString())
+					FileSystemItem targetFolder = client.createFolder(
+							UUID.randomUUID().toString()).get();
+					FileSystemItem fileToCopy = client.createFile(fileName)
 							.get();
-					FileSystemItem fileToCopy = client.createFile(fileName).get();
 
 					String sourcePath = fileToCopy.getName();
-					String destinationPath = targetFolder.getName() + "/" + fileToCopy.getName();
+					String destinationPath = targetFolder.getName() + "/"
+							+ fileToCopy.getName();
 					client.move(sourcePath, destinationPath, true).get();
 
 					client.getFileSystemItem(destinationPath).get();
@@ -112,7 +116,8 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String lib = "TestDocLib";
-					List<FileSystemItem> fileInfo = client.getFileSystemItems("", lib).get();
+					List<FileSystemItem> fileInfo = client.getFileSystemItems(
+							"", lib).get();
 					if (fileInfo == null) {
 						throw new Exception("Cannot list children folders");
 					}
@@ -140,9 +145,11 @@ public class FilesTests extends TestGroup {
 					FileClient client = ApplicationContext.getFileClient();
 					String someFile = UUID.randomUUID().toString() + ".foo";
 					String lib = "TestDocLib";
-					FileSystemItem fileInfo = client.createFile(someFile, lib).get();
+					FileSystemItem fileInfo = client.createFile(someFile, lib)
+							.get();
 					if (fileInfo == null) {
-						throw new Exception("Cannot create the file we want to erase");
+						throw new Exception(
+								"Cannot create the file we want to erase");
 					}
 					client.delete(fileInfo.getName(), lib);
 
@@ -170,7 +177,8 @@ public class FilesTests extends TestGroup {
 					String someFile = UUID.randomUUID().toString() + ".foo";
 					FileSystemItem fileInfo = client.createFile(someFile).get();
 					if (fileInfo == null) {
-						throw new Exception("Cannot create the file we want to erase");
+						throw new Exception(
+								"Cannot create the file we want to erase");
 					}
 
 					client.delete(fileInfo.getName());
@@ -197,8 +205,10 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String someFile = UUID.randomUUID().toString() + ".foo";
-					byte[] content = "some content".getBytes(Constants.UTF8_NAME);
-					FileSystemItem fileInfo = client.createFile(someFile, true, content).get();
+					byte[] content = "some content"
+							.getBytes(Constants.UTF8_NAME);
+					FileSystemItem fileInfo = client.createFile(someFile, true,
+							content).get();
 					if (fileInfo == null) {
 						throw new Exception("Expected folder information");
 					}
@@ -224,12 +234,16 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String lib = "TestDocLib";
-					String someFile = "SomeFolder\\" + UUID.randomUUID().toString() + ".fo1";
-					byte[] content = "some content".getBytes(Constants.UTF8_NAME);
+					String someFile = "SomeFolder\\"
+							+ UUID.randomUUID().toString() + ".fo1";
+					byte[] content = "some content"
+							.getBytes(Constants.UTF8_NAME);
 
-					FileSystemItem fileInfo = client.createFile(someFile, lib, true, content).get();
+					FileSystemItem fileInfo = client.createFile(someFile, lib,
+							true, content).get();
 					String path = (String) fileInfo.getData("Id");
-					FileSystemItem stored = client.getFileSystemItem(path, lib).get();
+					FileSystemItem stored = client.getFileSystemItem(path, lib)
+							.get();
 
 					if (stored == null) {
 						throw new Exception("Expected folder information");
@@ -257,7 +271,8 @@ public class FilesTests extends TestGroup {
 					FileClient client = ApplicationContext.getFileClient();
 					String someFile = UUID.randomUUID().toString() + ".foo";
 					String path = "TestDocLib";
-					FileSystemItem fileInfo = client.createFile(someFile, path).get();
+					FileSystemItem fileInfo = client.createFile(someFile, path)
+							.get();
 					if (fileInfo == null) {
 						throw new Exception("Expected folder information");
 					}
@@ -310,7 +325,8 @@ public class FilesTests extends TestGroup {
 					FileClient client = ApplicationContext.getFileClient();
 					String someFolder = UUID.randomUUID().toString();
 					String docLib = "TestDocLib";
-					FileSystemItem folderInfo = client.createFolder(someFolder, docLib).get();
+					FileSystemItem folderInfo = client.createFolder(someFolder,
+							docLib).get();
 					if (folderInfo == null) {
 						throw new Exception("Expected folder information");
 					}
@@ -337,7 +353,8 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String someFolder = UUID.randomUUID().toString();
-					FileSystemItem folderInfo = client.createFolder(someFolder).get();
+					FileSystemItem folderInfo = client.createFolder(someFolder)
+							.get();
 					if (folderInfo == null) {
 						throw new Exception("Expected folder information");
 					}
@@ -369,7 +386,8 @@ public class FilesTests extends TestGroup {
 					client.createFile(path).get();
 
 					String propertyName = "Name";
-					Object property = client.getProperty(propertyName, path).get();
+					Object property = client.getProperty(propertyName, path)
+							.get();
 					if (property == null) {
 						throw new Exception("Expected at least one file");
 					}
@@ -395,10 +413,14 @@ public class FilesTests extends TestGroup {
 					result.setTestCase(this);
 
 					FileClient client = ApplicationContext.getFileClient();
-					String path = "folder\\foo.txt";
-					String lib = "TestDocLib";
+
+					String folder = UUID.randomUUID().toString();
+					String fileName = UUID.randomUUID().toString() + ".txt";
+					String path = folder + "\\" + fileName;
+
 					String propertyName = "Name";
-					Object property = client.getProperty(propertyName, path, lib).get();
+					Object property = client.getProperty(propertyName, path,
+							"TestDocLib").get();
 					if (property == null) {
 						throw new Exception("Expected at least one file");
 					}
@@ -424,7 +446,11 @@ public class FilesTests extends TestGroup {
 					result.setTestCase(this);
 
 					FileClient client = ApplicationContext.getFileClient();
-					List<FileSystemItem> files = client.getFileSystemItems().get();
+					String fileName = UUID.randomUUID().toString() + ".txt";
+					client.createFile(fileName).get();
+
+					List<FileSystemItem> files = client.getFileSystemItems()
+							.get();
 					if (files.size() == 0) {
 						throw new Exception("Expected at least one file");
 					}
@@ -453,7 +479,8 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String someLibrary = "TestDocLib";
-					List<FileSystemItem> files = client.getFileSystemItems(null, someLibrary).get();
+					List<FileSystemItem> files = client.getFileSystemItems(
+							null, someLibrary).get();
 					if (files.size() == 0) {
 						throw new Exception("Expected at least one file");
 					}
@@ -481,11 +508,13 @@ public class FilesTests extends TestGroup {
 					result.setTestCase(this);
 
 					FileClient client = ApplicationContext.getFileClient();
-					String path = "Folder";
+					FileSystemItem folder = client.createFolder(
+							UUID.randomUUID().toString()).get();
 					String docLib = "TestDocLib";
-					List<FileSystemItem> files = client.getFileSystemItems(path, docLib).get();
-					if (files.size() == 0) {
-						throw new Exception("Expected at least one file");
+					List<FileSystemItem> files = client.getFileSystemItems(
+							folder.getName(), docLib).get();
+					if (files == null) {
+						throw new Exception("Expected folder information");
 					}
 
 					return result;
@@ -510,8 +539,9 @@ public class FilesTests extends TestGroup {
 					result.setTestCase(this);
 
 					FileClient client = ApplicationContext.getFileClient();
-					String path = "test.txt";
-					byte[] file = client.getFile(path).get();
+					String fileName = UUID.randomUUID().toString() + ".txt";
+					client.createFile(fileName).get();
+					byte[] file = client.getFile(fileName).get();
 					if (file == null) {
 						throw new Exception("Expected at least one file");
 					}
