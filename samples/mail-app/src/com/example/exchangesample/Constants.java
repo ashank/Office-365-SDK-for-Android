@@ -27,7 +27,7 @@ public class Constants {
     /**
      * Domain.
      */
-    public static final String DOMAIN = "p365ppetap04.ccsctp.net";
+    public static final String DOMAIN = "Enter your domain here";
     
    /**
      * Url for Oauth2 authorization page.
@@ -43,7 +43,7 @@ public class Constants {
     /**
      * Resource id for authorization and where need get access.
      */
-    public static final String RESOURCE_ID = "https://sdfpilot.outlook.com/";
+    public static final String RESOURCE_ID = "https://outlook.office365.com/";
     /**
      * Url application will be redirected after authentication.
      */

@@ -36,7 +36,7 @@ public class Constants {
     /**
      * TEST Endpoint to retrieve list current messages from the inbox.
      */
-    public static final String MAIL_MESSAGES_TEST = "https://sdfpilot.outlook.com/ews/OData";
+    public static final String MAIL_MESSAGES_TEST = "https://outlook.office365.com/ews/odata";
 
     /**
      * Application logging TAG.
@@ -63,7 +63,7 @@ public class Constants {
     /**
      * Resource id for authorization and where need get access.
      */
-    public static final String RESOURCE_ID = "https://sdfpilot.outlook.com/";
+    public static final String RESOURCE_ID = "https://outlook.office365.com/";
     /**
      * Url application will be redirected after authentication.
      */
