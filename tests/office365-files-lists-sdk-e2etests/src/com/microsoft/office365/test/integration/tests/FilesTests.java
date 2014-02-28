@@ -567,7 +567,9 @@ public class FilesTests extends TestGroup {
 					result.setTestCase(this);
 
 					FileClient client = ApplicationContext.getFileClient();
-					String path = "Folder\\foo.txt";
+					String folder = UUID.randomUUID().toString();
+					String fileName = UUID.randomUUID().toString() + ".txt";
+					String path = folder + "\\" + fileName;
 					String docLib = "TestDocLib";
 					byte[] file = client.getFile(path, docLib).get();
 					if (file == null) {

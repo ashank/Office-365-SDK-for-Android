@@ -46,12 +46,17 @@ public class DiscoveryFragment extends Fragment {
 
             @Override
             public List<FileSystemItem> call() throws Exception {
+            	
+            	//we get an instance of the office client
+            	//look the implementation, because here is where we get the token from ADAL library
                 OfficeClient officeClient = mApplication.getOfficeClient(DiscoveryFragment.this.getActivity(), Constants.DISCOVERY_RESOURCE_ID).get();
                 
+                //we get the discovery information from the endpoint.
                 List<DiscoveryInformation> services = officeClient.getDiscoveryInfo().get();
                 
                 DiscoveryInformation fileService = null;
                 for (DiscoveryInformation service : services) {
+                	//we look for the MyFiles service capability
                     if (service.getCapability().equals(Constants.MYFILES_CAPABILITY)) {
                         fileService = service;
                         break;
@@ -62,11 +67,15 @@ public class DiscoveryFragment extends Fragment {
                     return null;
                 }
                 
+                //once we have the service, we ask for the resource id.
                 String sharepointResourceId = fileService.getServiceResourceId();
+                //gets the service endpoint
                 String endpointUrl = fileService.getServiceEndpointUri();
                 
+                //we store the sharepoint url splitting when we find the "_api" component
                 String sharepointUrl = endpointUrl.split("_api")[0];
                 
+                //creates an instance of the FileClient class. This is the File API entry point.
                 FileClient fileClient = mApplication.getFileClient(DiscoveryFragment.this.getActivity(), sharepointResourceId, sharepointUrl).get();
                 
                 return fileClient.getFileSystemItems().get();

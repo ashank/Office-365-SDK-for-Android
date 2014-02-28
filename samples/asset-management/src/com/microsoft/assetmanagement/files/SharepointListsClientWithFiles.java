@@ -18,22 +18,41 @@ import com.microsoft.office365.OfficeFuture;
 import com.microsoft.office365.OfficeEntity;
 import com.microsoft.office365.lists.SharepointListsClient;
 
+// TODO: Auto-generated Javadoc
 /**
- * This class will be replaced when the new Files API is released to production
+ * This class will be replaced when the new Files API is released to production.
  */
 
 public class SharepointListsClientWithFiles extends SharepointListsClient {
 
+	/**
+	 * Instantiates a new sharepoint lists client with files.
+	 *
+	 * @param serverUrl the server url
+	 * @param siteRelativeUrl the site relative url
+	 * @param credentials the credentials
+	 */
 	public SharepointListsClientWithFiles(String serverUrl, String siteRelativeUrl,
 			Credentials credentials) {
 		super(serverUrl, siteRelativeUrl, credentials);
 	}
 
+	/**
+	 * Instantiates a new sharepoint lists client with files.
+	 *
+	 * @param serverUrl the server url
+	 * @param siteRelativeUrl the site relative url
+	 * @param credentials the credentials
+	 * @param logger the logger
+	 */
 	public SharepointListsClientWithFiles(String serverUrl, String siteRelativeUrl,
 			Credentials credentials, Logger logger) {
 		super(serverUrl, siteRelativeUrl, credentials, logger);
 	}
 
+	/**
+	 * The Class SPFile.
+	 */
 	public class SPFile extends OfficeEntity {
 
 	}
@@ -108,32 +127,72 @@ public class SharepointListsClientWithFiles extends SharepointListsClient {
 		return result;
 	}
 
+	/**
+	 * The Class DocumentLibraryItem.
+	 */
 	public class DocumentLibraryItem {
+		
+		/** The m content. */
 		private byte[] mContent;
+		
+		/** The m item id. */
 		private String mItemId;
 
+		/**
+		 * Instantiates a new document library item.
+		 *
+		 * @param content the content
+		 * @param itemId the item id
+		 */
 		public DocumentLibraryItem(byte[] content, String itemId) {
 			setContent(content);
 			setItemId(itemId);
 		}
 
+		/**
+		 * Gets the content.
+		 *
+		 * @return the content
+		 */
 		public byte[] getContent() {
 			return mContent;
 		}
 
+		/**
+		 * Sets the content.
+		 *
+		 * @param content the new content
+		 */
 		public void setContent(byte[] content) {
 			this.mContent = content;
 		}
 
+		/**
+		 * Gets the item id.
+		 *
+		 * @return the item id
+		 */
 		public String getItemId() {
 			return mItemId;
 		}
 
+		/**
+		 * Sets the item id.
+		 *
+		 * @param itemId the new item id
+		 */
 		public void setItemId(String itemId) {
 			this.mItemId = itemId;
 		}
 	}
 
+	/**
+	 * Gets the SP file from picture library.
+	 *
+	 * @param library the library
+	 * @param id the id
+	 * @return the SP file from picture library
+	 */
 	public OfficeFuture<SPFile> getSPFileFromPictureLibrary(final String library, final String id) {
 
 		final OfficeFuture<SPFile> result = new OfficeFuture<SPFile>();
@@ -161,6 +220,14 @@ public class SharepointListsClientWithFiles extends SharepointListsClient {
 		return result;
 	}
 
+	/**
+	 * Upload file.
+	 *
+	 * @param documentLibraryName the document library name
+	 * @param fileName the file name
+	 * @param fileContent the file content
+	 * @return the office future
+	 */
 	public OfficeFuture<SPFile> uploadFile(final String documentLibraryName, final String fileName,
 			final byte[] fileContent) {
 		final OfficeFuture<SPFile> result = new OfficeFuture<SPFile>();
@@ -215,6 +282,12 @@ public class SharepointListsClientWithFiles extends SharepointListsClient {
 		return result;
 	}
 
+	/**
+	 * Gets the list item id for file by server relative url.
+	 *
+	 * @param serverRelativeUrl the server relative url
+	 * @return the list item id for file by server relative url
+	 */
 	public OfficeFuture<String> getListItemIdForFileByServerRelativeUrl(String serverRelativeUrl) {
 		final OfficeFuture<String> result = new OfficeFuture<String>();
 
