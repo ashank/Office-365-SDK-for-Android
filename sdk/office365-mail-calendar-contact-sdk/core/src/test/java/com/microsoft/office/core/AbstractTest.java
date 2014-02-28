@@ -44,11 +44,11 @@ public abstract class AbstractTest extends Assert {
 
     protected static ODataV4Client v4Client;
 
-    protected static final String endpoint = "https://sdfpilot.outlook.com/EWS/OData/";
+    protected static final String endpoint = "https://outlook.office365.com/ews/odata";
 
-    protected static final String username = "odata1@CTSTest.ccsctp.net";
+    protected static final String username = "Enter your username here";
 
-    protected static final String password = "07Apples";
+    protected static final String password = "Enter your password here";
 
     /**
      * This is needed for correct number handling (Double, for example).

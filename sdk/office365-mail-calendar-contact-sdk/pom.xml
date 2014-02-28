@@ -80,7 +80,7 @@
     <skip.it.tests>true</skip.it.tests>
     <main.basedir>${project.basedir}</main.basedir>
 
-    <serviceRootURL>https://sdfpilot.outlook.com/EWS/OData/</serviceRootURL>
+    <serviceRootURL>https://outlook.office365.com/ews/odata</serviceRootURL>
     
     <odatajclient.version>0.10.2-SNAPSHOT</odatajclient.version>
 

@@ -44,7 +44,7 @@ public class OfficeCredentialsImpl implements IOfficeCredentials, Serializable {
     private String mClientId = "";
 
     /**
-     * SharePoint resource unique ID. E.g. "https://sdfpilot.outlook.com/".
+     * SharePoint resource unique ID. E.g. "https://outlook.office365.com/".
      */
     private String mResourceId = "";
 
@@ -75,7 +75,7 @@ public class OfficeCredentialsImpl implements IOfficeCredentials, Serializable {
      *
      * @param authorityUrl SharePoint authority url. E.g. "https://login.windows-ppe.net/p365ppetap04.ccsctp.net".
      * @param clientId SharePoint application unique ID. E.g. "60188dfc-3250-44c5-8434-8f106c9e529e".
-     * @param resourceId SharePoint resource unique ID. E.g. "https://sdfpilot.outlook.com/".
+     * @param resourceId SharePoint resource unique ID. E.g. "https://outlook.office365.com/".
      * @param redirectUrl Url application will be redirected after authentication. Should be SSL secure. "https://www.domain.com/redirect".
      * @throws IllegalArgumentException Thrown if arguments validation fails.
      */
