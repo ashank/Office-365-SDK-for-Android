@@ -33,6 +33,7 @@ public class DemoApplication extends Application {
         final OfficeFuture<OfficeClient> future = new OfficeFuture<OfficeClient>();
 
         try {
+        	//here we get the token using ADAL Library
             getAuthenticationContext().acquireToken(activity, resourceId,
                     Constants.CLIENT_ID, Constants.REDIRECT_URL, "",
                     new AuthenticationCallback<AuthenticationResult>() {
@@ -44,9 +45,11 @@ public class DemoApplication extends Application {
 
                         @Override
                         public void onSuccess(AuthenticationResult result) {
+                        	//once succedded we create a credentials instance using the token from ADAL
                             OAuthCredentials credentials = new OAuthCredentials(result
                                     .getAccessToken());
                             
+                            //retrieve the OfficeClient with the credentials
                             OfficeClient client = new OfficeClient(credentials);
                             future.setResult(client);
                         }
