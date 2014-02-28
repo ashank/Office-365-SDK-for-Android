@@ -20,15 +20,7 @@ The SDK is composed of three independent packages, so that you can import only t
 2.	office365-lists-sdk  [depends on office365-base-sdk]
 3.	office365-mail-calendar-contact-sdk
 
-The SDK is compatible with the following Android versions 
-
-Phone Emulators Android versions:4.0.3 (API15),4.1.2 (API16),4.2.2 (API 17), 4.3 (API18),4.4.2 (API19)
-
-Android Emulators:Galaxy Nexus (Android 4.0.3), Nexus 7 (Android 4.1.2), Nexus 4 (Android 4.1.2)
-
-Tablet Emulators Android:7.0" WSVGA (Android 4.3)
-
-Devices Android Phones:HTC Desire HD, Android 4.0.4 custom
+The SDK is compatible with the following Android versions: Phone Emulators Android versions:4.0.3 (API15),4.1.2 (API16),4.2.2 (API 17), 4.3 (API18),4.4.2 (API19)
 
 To help you get started quickly, we have created sample applications, including:
 
