@@ -69,7 +69,7 @@ All the code that calls into the lists SDK is in the /assetmanagement/src/com/mi
   
   o	Delete a list item – Refer to deleteCar method
 
-Note: The app uses cookie based authentication.
+Note: The app uses cookie based authentication and has been tested on Android versions API 14 and 17 .
 
 Files-discovery-app
 
@@ -121,6 +121,11 @@ String sharepointResourceId = fileService.getServiceResourceId();
 String endpointUrl = fileService.getServiceEndpointUri();
 String sharepointUrl = endpointUrl.split("_api")[0];
 FileClient fileClient = mApplication.getFileClient(DiscoveryFragment.this.getActivity(), sharepointResourceId, sharepointUrl).get();
+
+License
+-------
+
+Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. Licensed under the Apache License, Version 2.0 (the "License"); 
 
 	
 
