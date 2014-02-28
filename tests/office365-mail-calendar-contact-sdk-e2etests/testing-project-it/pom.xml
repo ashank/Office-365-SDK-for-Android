@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.foo.bar</groupId>
+	<artifactId>my-android-project-it</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>apk</packaging>
+	<name>my-android-project-it - Integration tests</name>
+
+	<properties>
+		<platform.version> 4.1.1.4</platform.version>
+		<android.plugin.version>3.8.2</android.plugin.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android-test</artifactId>
+			<version>${platform.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.foo.bar</groupId>
+			<artifactId>my-android-project</artifactId>
+			<type>apk</type>
+			<version>1.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.foo.bar</groupId>
+			<artifactId>my-android-project</artifactId>
+			<type>jar</type>
+			<version>1.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<version>${android.plugin.version}</version>
+				<configuration>
+					<sdk>
+						<platform>16</platform>
+					</sdk> 
+					<dexCoreLibrary>true</dexCoreLibrary>
+				</configuration>	
+				<extensions>true</extensions>
+			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <!-- Skip execution in test phase and execute in integration-test phase instead -->
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>surefire-it</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>android:deploy</goal>
+                            <goal>android:run</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+		</plugins>
+	</build>
+</project>
