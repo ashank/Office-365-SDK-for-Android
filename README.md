@@ -87,6 +87,43 @@ Files-discovery-app
 	public static final String REDIRECT_URL = "http://your-redirect-url.com";
 	
 
+-	Click on the one drive link on your SharePoint site to instantiate it. 
+-	Run the application. You will be asked to login with your SP account. Once logged in, the app will retrieve the lists of files from your OneDrive account.  
+https://<sharepoint URL>/personal/<account name>/Documents/Forms/All.aspx
+-	A breakdown of the code is below. 
+
+Step 1: The app gets authorized by the user by calling the Authorization URL and passing its hardcoded scope.
+
+Step 2: The app gets a token for Discovery by calling the Token URL and passing the code from
+OfficeClient officeClient = mApplication.getOfficeClient(DiscoveryFragment.this.getActivity(), Constants.DISCOVERY_RESOURCE_ID).get();
+
+Step 3: The app discovers the services that implement its desired scope by calling the Discovery URL passing the token from step #2.
+
+List<DiscoveryInformation> services = officeClient.getDiscoveryInfo("https://api.officeppe.com/discovery/me/services").get();
+
+Step 4: For each consented capability, Discovery will return a service URL and a service resource ID.
+
+DiscoveryInformation fileService = null;
+for (DiscoveryInformation service : services) {
+  if (service.getCapability().equals(Constants.MYFILES_CAPABILITY)) {
+  fileService = service;
+  break;
+ }
+}
+
+Then for the desired service, the app does 
+
+Step 5: Get a token for the service by calling the Token URL and passing the service resource ID from step #4.
+
+Step 6: Now the app is set to call the service using the service URL and the token from step #5.
+
+String sharepointResourceId = fileService.getServiceResourceId();
+String endpointUrl = fileService.getServiceEndpointUri();
+String sharepointUrl = endpointUrl.split("_api")[0];
+FileClient fileClient = mApplication.getFileClient(DiscoveryFragment.this.getActivity(), sharepointResourceId, sharepointUrl).get();
+
+	
+
 
 
 
