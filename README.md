@@ -71,5 +71,22 @@ All the code that calls into the lists SDK is in the /assetmanagement/src/com/mi
 
 Note: The app uses cookie based authentication.
 
+Files-discovery-app
+
+-	Download the following code onto your machine from this repo: office365-base-sdk, office365-files-sdk, files-discovery-app.
+-	Download the Azure Active directory Android library [AADAL] from the following repo https://github.com/MSOpenTech/azure-activedirectory-library-for-android
+-	Import the above code into your favorite IDE. 
+-	Add a dependency on the office365-base-sdk from the office365-lists-sdk
+-	Add a dependency on the office365-base-sdk from the office365-files-sdk
+-	Add a dependency on the office365-files-sdk and AADAL the from the files demo app
+-	Subscribe to SharePoint online from http://msdn.microsoft.com/en-us/library/fp179924(v=office.15).aspx or use an existing SharePoint Online site. 
+-	Please edit the /file-discovery-app/src/com/microsoft/office365/file-discovery-app/Constants.java file and provide the values for the constants below.
+
+	public static final String CLIENT_ID = "your-client-id"; 
+	
+	public static final String REDIRECT_URL = "http://your-redirect-url.com";
+	
+
+
 
 
