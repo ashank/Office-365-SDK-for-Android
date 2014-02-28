@@ -1,0 +1,238 @@
+#*
+ * Copyright © Microsoft Open Technologies, Inc.
+ *
+ * All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+ * ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+ * PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+ *
+ * See the Apache License, Version 2.0 for the specific language
+ * governing permissions and limitations under the License.
+ *#
+#set( $clsSuffix = ".class" )
+package ${package};
+
+import com.msopentech.odatajclient.engine.client.http.HttpClientException;
+import com.msopentech.odatajclient.engine.communication.ODataClientErrorException;
+import com.msopentech.odatajclient.engine.communication.ODataServerErrorException;
+
+import com.msopentech.odatajclient.proxy.api.annotations.Namespace;
+import com.msopentech.odatajclient.proxy.api.annotations.EntityType;
+import com.msopentech.odatajclient.proxy.api.annotations.Key;
+import com.msopentech.odatajclient.proxy.api.annotations.KeyRef;
+import com.msopentech.odatajclient.proxy.api.annotations.NavigationProperty;
+import com.msopentech.odatajclient.proxy.api.annotations.Property;
+import com.msopentech.odatajclient.proxy.api.annotations.Operation;
+import com.msopentech.odatajclient.proxy.api.annotations.Parameter;
+import com.msopentech.odatajclient.engine.data.metadata.edm.v3.ParameterMode;
+import com.msopentech.odatajclient.proxy.api.AbstractComplexType;
+import com.msopentech.odatajclient.proxy.api.AbstractOpenType;
+import com.msopentech.odatajclient.engine.data.metadata.EdmContentKind;
+import com.msopentech.odatajclient.engine.data.metadata.edm.ConcurrencyMode;
+#foreach($ns in $namespaces)
+import ${basePackage}.${ns}.*;
+import ${basePackage}.${ns}.types.*;
+#end
+
+// EdmSimpleType property imports
+import com.msopentech.odatajclient.engine.data.ODataDuration;
+import com.msopentech.odatajclient.engine.data.ODataTimestamp;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Geospatial;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.GeospatialCollection;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.LineString;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiLineString;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiPoint;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiPolygon;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Point;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Polygon;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.util.UUID;
+import java.io.Serializable;
+import java.util.Collection;
+
+#set ($doc = $utility.getDocumentation($entityType))
+#if($doc && !$doc.getKey().isEmpty())
+/**
+ * $doc.getKey()
+#if(!$doc.getValue().isEmpty())
+ * <br />
+ * $doc.getValue()
+#end
+ */
+#end
+#if( $keyRef )@KeyRef(${keyRef}.class)#end
+#if($baseType)#set($sIdx = $baseType.lastIndexOf(".") + 2)#set($baseType = $baseType.substring($sIdx))#end
+
+/** Default I$utility.capitalize($entityType.Name) implementation. */
+@Namespace("$namespace")
+#set($baseTypeName = ${schemaName})
+public class $utility.capitalize($entityType.Name)#if($baseType) extends $baseType#end implements I$utility.capitalize($entityType.Name) {
+
+    /** Proxy to communicate with service. */
+    private I$utility.capitalize($entityType.Name) mProxy;
+
+    /**
+     * Constructor.
+     *
+     * @param proxy proxy to communicate with service.
+     */
+    public $utility.capitalize($entityType.Name)(I$utility.capitalize($entityType.Name) proxy) {
+        #if($baseType)super(proxy);#{end}
+        mProxy = proxy;
+    }
+
+#set( $keys = [] )
+#foreach($key in $entityType.Key.PropertyRefs)
+    #if(!$keys.add($key.Name)) #stop #end
+#end
+
+#foreach($property in $entityType.Properties)
+    #set($fcprops = $utility.getFcProperties($property) )
+    #if($keys.contains($property.Name))@Key#end
+
+    /**
+     * {@inheritDoc}
+     */
+    public $utility.getJavaType($property.Type) get$utility.capitalize($property.Name)() {
+        return mProxy.get$utility.capitalize($property.Name)();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public I$utility.capitalize($entityType.Name) set$utility.capitalize($property.Name)(final $utility.getJavaType($property.Type) _$utility.uncapitalize($property.Name)) {
+        mProxy.set$utility.capitalize($property.Name)(_$utility.uncapitalize($property.Name));
+        return this;
+    }
+
+#end
+
+#foreach($property in $entityType.NavigationProperties)
+#set( $type = $utility.getNavigationType($property) )
+#set( $binding = $utility.getNavigationBindingDetails("${namespace}.${entityType.Name}", $property) )
+
+#if($binding.EntitySet)
+        
+    /**
+     * {@inheritDoc}
+     */
+    public $utility.getEntitySetJavaType($property) get$utility.capitalize($property.Name)() throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        return mProxy.get$utility.capitalize($property.Name)();
+    }
+#*
+    /**
+     * {@inheritDoc}
+     */
+    public I$entityType.Name set$utility.capitalize($property.Name)(final $utility.getJavaType($type) _$utility.uncapitalize($property.Name)) throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        mProxy.set$utility.capitalize($property.Name)(_$utility.uncapitalize($property.Name));
+        return this;
+    }*#
+#else
+    /**
+     * {@inheritDoc}
+     */
+    public $utility.getJavaType($property.Type) get$utility.capitalize($property.Name)() throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        return mProxy.get$utility.capitalize($property.Name)();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public I$entityType.Name set$utility.capitalize($property.Name)(final $utility.getJavaType($property.Type) _$utility.uncapitalize($property.Name)) throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        mProxy.set$utility.capitalize($property.Name)(_$utility.uncapitalize($property.Name));
+        return this;
+    }
+#end
+
+#end
+
+#foreach($operation in $utility.getFunctionsBoundTo($entityType.Name, false))
+    /**
+     * {@inheritDoc}
+     */
+    public #if($operation.ReturnType.Type)$utility.getJavaType($operation.ReturnType.Type)#{else}void#end $utility.uncapitalize($operation.Name) throws HttpClientException, ODataServerErrorException, ODataClientErrorException (
+    #if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+        *##if( !$utility.isSameType($entityType.Name, $param.Type, false) )#*
+      *#   $utility.getJavaType($param.Type) $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end
+    #end#*
+    *##end) {
+    	#if($operation.ReturnType.Type)return #{end}mProxy.$utility.uncapitalize($operation.Name)(
+    	#if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+        *##if( !$utility.isSameType($entityType.Name, $param.Type, false) )#*
+      *#    $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end
+    #end#*
+    *##end);
+    }
+#end
+
+#foreach($operation in $utility.getActionsBoundTo($entityType.Name, false))
+    /**
+     * {@inheritDoc}
+     */
+    public #if($operation.ReturnType.Type)$utility.getJavaType($operation.ReturnType.Type)#{else}void#end $utility.uncapitalize($operation.Name)(
+    #if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+        *##if( !$utility.isSameType($entityType.Name, $param.Type, false) )#*
+      *#   $utility.getJavaType($param.Type) $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end
+    #end#*
+    *##end) throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+    	#if($operation.ReturnType.Type)return #{end}mProxy.$utility.uncapitalize($operation.Name)(
+    	#if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+        *##if( !$utility.isSameType($entityType.Name, $param.Type, false) )#*
+      *#    $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end
+    #end#*
+    *##end);
+    }
+#end
+
+#if (!$entityType.isAbstractEntityType())
+#foreach($entitySet in $utility.getEntitySetNames($entityType))
+    /**
+     * {@inheritDoc}
+     */
+    public I$entitySet $utility.uncapitalize($entitySet)() throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        return mProxy.$utility.uncapitalize($entitySet)();
+    }
+
+    /**
+     * Creates a new instance of I${utility.capitalize($entityType.Name)}.
+     * 
+     * @return an instance was created.
+     */
+    public static I$utility.capitalize($entityType.Name) create() {
+        $utility.getEntityContainerName() container = EntityContainerFactory.getAnyInstance().getEntityContainer(${utility.getEntityContainerName()});
+        return container.get$entitySet().new$utility.capitalize($entityType.Name)();
+
+    }
+
+#end
+#end
+}

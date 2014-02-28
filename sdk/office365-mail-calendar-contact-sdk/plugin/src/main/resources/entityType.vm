@@ -1,0 +1,269 @@
+#*
+ * Copyright © Microsoft Open Technologies, Inc.
+ *
+ * All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+ * ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+ * PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+ *
+ * See the Apache License, Version 2.0 for the specific language
+ * governing permissions and limitations under the License.
+ *#
+#set( $clsSuffix = ".class" )
+package ${package};
+
+import com.msopentech.odatajclient.engine.client.http.HttpClientException;
+import com.msopentech.odatajclient.engine.communication.ODataClientErrorException;
+import com.msopentech.odatajclient.engine.communication.ODataServerErrorException;
+
+import com.msopentech.odatajclient.engine.client.http.HttpMethod;
+import com.msopentech.odatajclient.proxy.api.annotations.Namespace;
+import com.msopentech.odatajclient.proxy.api.annotations.EntityType;
+import com.msopentech.odatajclient.proxy.api.annotations.Key;
+import com.msopentech.odatajclient.proxy.api.annotations.KeyRef;
+import com.msopentech.odatajclient.proxy.api.annotations.NavigationProperty;
+import com.msopentech.odatajclient.proxy.api.annotations.Property;
+import com.msopentech.odatajclient.proxy.api.annotations.Operation;
+import com.msopentech.odatajclient.proxy.api.annotations.Parameter;
+import com.msopentech.odatajclient.engine.data.metadata.edm.v3.ParameterMode;
+import com.msopentech.odatajclient.proxy.api.AbstractComplexType;
+import com.msopentech.odatajclient.proxy.api.AbstractOpenType;
+import com.msopentech.odatajclient.engine.data.metadata.EdmContentKind;
+import com.msopentech.odatajclient.engine.data.metadata.edm.ConcurrencyMode;
+#foreach($ns in $namespaces)
+import ${basePackage}.${ns}.*;
+import ${basePackage}.${ns}.types.*;
+#end
+
+// EdmSimpleType property imports
+import com.msopentech.odatajclient.engine.data.ODataDuration;
+import com.msopentech.odatajclient.engine.data.ODataTimestamp;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Geospatial;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.GeospatialCollection;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.LineString;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiLineString;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiPoint;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiPolygon;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Point;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Polygon;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.util.UUID;
+import java.io.Serializable;
+import java.util.Collection;
+
+#if( $keyRef )@KeyRef(${keyRef}.class)#end
+
+/** Represents $entityType.Name entity type. */
+@Namespace("$namespace")
+@EntityType(name = "$entityType.Name",
+        openType = $entityType.isOpenType(),
+        hasStream = $entityType.isHasStream(),
+        isAbstract = $entityType.isAbstractEntityType(),
+        baseType = "#if($entityType.getBaseType())$entityType.getBaseType()#end")
+#set($baseTypeName = ${schemaName})
+public interface I$utility.capitalize($entityType.Name) extends #if( $baseType )$baseType#{elseif}( $entityType.isOpenType() )AbstractOpenType#{else}Serializable#end {
+
+#set( $keys = [] )
+#foreach($key in $entityType.Key.PropertyRefs)
+    #if(!$keys.add($key.Name)) #stop #end
+#end
+
+#foreach($property in $entityType.Properties)
+    #set($fcprops = $utility.getFcProperties($property) )
+    #if($keys.contains($property.Name))@Key#end
+
+    /**
+     * Gets a value of $property.Name.
+     *
+     * @return value of $property.Name
+     */
+    @Property(name = "$property.Name", 
+                type = "$property.Type", 
+                nullable = $property.Nullable,
+                defaultValue = "#if($property.getDefaultValue())$property.getDefaultValue()#end",
+                maxLenght = #if($property.getMaxLength() && !$property.getMaxLength().equalsIgnoreCase("max"))$property.getMaxLength()#{else}Integer.MAX_VALUE#end,
+                fixedLenght = #if($property.isFixedLength())$property.isFixedLength()#{else}false#end,
+                precision = #if($property.getPrecision())$property.getPrecision()#{else}0#end,
+                scale = #if($property.getScale())$property.getScale()#{else}0#end,
+                unicode = #if($property.isUnicode())$property.isUnicode()#{else}false#end,
+                collation = "#if($property.getCollation())$property.getCollation()#end",
+                srid = "#if($property.getSRID())$property.getSRID()#end",
+                concurrencyMode = #if($property.getConcurrencyMode())ConcurrencyMode.$property.getConcurrencyMode()#{else}ConcurrencyMode.None#end,
+                fcSourcePath = "#if($fcprops.containsKey("fcSourcePath"))$fcprops.get("fcSourcePath")#end",
+                fcTargetPath = "#if($fcprops.containsKey("fcTargetPath"))$fcprops.get("fcTargetPath")#end",
+                fcContentKind = #if($fcprops.containsKey("fcContentKind"))EdmContentKind.$fcprops.get("fcContentKind")#{else}EdmContentKind.text#end,
+                fcNSPrefix = "#if($fcprops.containsKey("fcNSPrefix"))$fcprops.get("fcNSPrefix")#end",
+                fcNSURI = "#if($fcprops.containsKey("fcNSURI"))$fcprops.get("fcNSURI")#end",
+                fcKeepInContent = #if($fcprops.containsKey("fcKeepInContent"))$fcprops.get("fcKeepInContent")#{else}false#end)
+    public $utility.getJavaType($property.Type) get$utility.capitalize($property.Name)();
+
+    /**
+     * Sets a value of $property.Name.
+     *
+     * @param _$utility.uncapitalize($property.Name) new $property.Name value.
+     * @return current I$utility.capitalize($entityType.Name) instance.
+     */
+    public I$utility.capitalize($entityType.Name) set$utility.capitalize($property.Name)(final $utility.getJavaType($property.Type) _$utility.uncapitalize($property.Name));
+
+#end
+
+#foreach($property in $entityType.NavigationProperties)
+    #set( $type = $utility.getNavigationType($property) )
+    #set( $binding = $utility.getNavigationBindingDetails("${namespace}.${entityType.Name}", $property) )
+
+#if ($binding.EntitySet)
+    /**
+     * Gets a value of $property.Name navigation property.
+     *
+     * @return value of $property.Name navigation property.
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    @NavigationProperty(name = "$property.Name", 
+                type = "$type", 
+                targetSchema = "$binding.Schema.Namespace", 
+                targetContainer = "$binding.Container.Name", 
+                targetEntitySet = "$binding.EntitySet.Name")
+    public $utility.getEntitySetJavaType($property) get$utility.capitalize($property.Name)() throws HttpClientException, ODataServerErrorException, ODataClientErrorException;
+#* no setter for entity sets
+    /**
+     * Sets a value of $property.Name navigation property.
+     *
+     * @param _$utility.uncapitalize($property.Name) value of $property.Name navigation property.
+     * @return current I$utility.capitalize($entityType.Name) instance.
+     */
+    public I$entityType.Name set$utility.capitalize($property.Name)(final $utility.getJavaType($type) _$utility.uncapitalize($property.Name)) throws HttpClientException, ODataServerErrorException, ODataClientErrorException;*#
+#else
+    /**
+     * Gets a value of $property.Name navigation property.
+     *
+     * @return value of $property.Name navigation property.
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    @NavigationProperty(name = "$property.Name",
+                type = "$type", 
+                targetSchema = "$binding.Schema.Namespace", 
+                targetContainer = "$binding.Container.Name", 
+                targetEntitySet = "")
+    public $utility.getJavaType($type) get$utility.capitalize($property.Name)() throws HttpClientException, ODataServerErrorException, ODataClientErrorException ;
+
+    /**
+     * Sets a value of $property.Name navigation property.
+     *
+     * @param _$utility.uncapitalize($property.Name) value of $property.Name navigation property.
+     * @return current I$utility.capitalize($entityType.Name) instance.
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    public I$entityType.Name set$utility.capitalize($property.Name)(final $utility.getJavaType($type) _$utility.uncapitalize($property.Name)) throws HttpClientException, ODataServerErrorException, ODataClientErrorException ;
+#end
+#end
+
+#foreach($operation in $utility.getFunctionsBoundTo($entityType.Name, false))
+    /**
+     * Invokes $operation.Name function on this I$utility.capitalize($entityType.Name).
+#foreach($param in $operation.Parameters)
+     * @param $utility.uncapitalize($param.Name) ${param.Name}.
+#end
+#if ($operation.ReturnType)
+     * @return ${operation.ReturnType.Type}.
+#end
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    @Operation(name = "$operation.Name",
+                    isSideEffecting = false#if($operation.EntitySetPath),
+                    entitySetPath = $operation.EntitySetPath#end#if($operation.isIsComposable),
+                    isComposable = $operation.isIsComposable#end#if($operation.ReturnType),
+                    returnType = "$operation.ReturnType"#end)
+    #if($operation.ReturnType.Type)$utility.getJavaType($operation.ReturnType.Type)#{else}void#end $utility.uncapitalize($operation.Name)(
+    #if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+        *##if( !$utility.isSameType($entityType.Name, $param.Type, false) )#*
+      *#    @Parameter(name = "$param.Name", type = "$param.Type", nullable = $param.Nullable#if($param.Mode), mode = ParameterMode.$param.Mode.toString()#end) $utility.getJavaType($param.Type) $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end
+    #end#*
+    *##end) throws HttpClientException, ODataServerErrorException, ODataClientErrorException ;
+#end
+
+#foreach($operation in $utility.getActionsBoundTo($entityType.Name, false))
+    /**
+     * Invokes $operation.Name action on this I$utility.capitalize($entityType.Name).
+#foreach($param in $operation.Parameters)
+     * @param $utility.uncapitalize($param.Name) ${param.Name}.
+#end
+#if ($operation.ReturnType)
+     * @return ${operation.ReturnType.Type}.
+#end
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    @Operation(name = "$operation.Name",
+                    httpMethod = HttpMethod.POST#if($operation.EntitySetPath),
+                    entitySetPath = "$operation.EntitySetPath"#end#if($operation.isIsComposable),
+                    isComposable = $operation.isIsComposable#end#if($operation.ReturnType.Type),
+                    returnType = "$operation.ReturnType.Type"#end)
+    #if($operation.ReturnType.Type)$utility.getJavaType($operation.ReturnType.Type)#{else}void#end $utility.uncapitalize($operation.Name)(
+    #if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+        *##if( !$utility.isSameType($entityType.Name, $param.Type, false) )#*
+      *#    @Parameter(name = "$param.Name", type = "$param.Type", nullable = $param.Nullable#if($param.Mode), mode = ParameterMode.$param.Mode.toString()#end) $utility.getJavaType($param.Type) $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end
+    #end#*
+    *##end) throws HttpClientException, ODataServerErrorException, ODataClientErrorException ;
+#end
+
+#if($entityType.isHasStream())
+    /**
+     * Sets a value of stream property for this ${entityType.Name}.
+     *
+     * @param stream stream.
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     * @return current I$utility.capitalize($entityType.Name) instance.
+     */
+    public I$utility.capitalize($entityType.Name) setStream(java.io.InputStream stream) throws HttpClientException, ODataServerErrorException, ODataClientErrorException ;
+
+    /**
+     * Gets a value of stream property for this ${entityType.Name}.
+     *
+     * @return stream.
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    public java.io.InputStream getStream() throws HttpClientException, ODataServerErrorException, ODataClientErrorException ;
+#end
+
+#foreach($entitySet in $utility.getEntitySetNames($entityType))
+    /**
+     * Gets $entitySet related to this ${entityType.Name}.
+     *
+     * @return ${entitySet}.
+     */
+    public I$entitySet $utility.uncapitalize($entitySet)() throws HttpClientException, ODataServerErrorException, ODataClientErrorException ;
+
+#end
+}

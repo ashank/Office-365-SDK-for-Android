@@ -1,0 +1,295 @@
+#*
+ * Copyright © Microsoft Open Technologies, Inc.
+ *
+ * All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+ * ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+ * PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+ *
+ * See the Apache License, Version 2.0 for the specific language
+ * governing permissions and limitations under the License.
+ *#
+package ${package};
+
+import com.msopentech.odatajclient.engine.client.http.HttpClientException;
+import com.msopentech.odatajclient.engine.communication.ODataClientErrorException;
+import com.msopentech.odatajclient.engine.communication.ODataServerErrorException;
+
+import com.microsoft.office.proxy.OfficeEntityContainerFactory;
+import com.microsoft.office.proxy.OfficeEntitySet;
+import com.msopentech.odatajclient.proxy.api.AbstractEntityCollection;
+import com.msopentech.odatajclient.proxy.api.Query;
+import com.msopentech.odatajclient.proxy.api.annotations.EntitySet;
+import com.msopentech.odatajclient.proxy.api.annotations.CompoundKey;
+import com.msopentech.odatajclient.proxy.api.annotations.CompoundKeyElement;
+#foreach($ns in $namespaces)
+import ${basePackage}.${ns}.*;
+import ${basePackage}.${ns}.types.*;
+#end
+
+// EdmSimpleType property imports
+import com.msopentech.odatajclient.engine.data.ODataDuration;
+import com.msopentech.odatajclient.engine.data.ODataTimestamp;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Geospatial;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.GeospatialCollection;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.LineString;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiLineString;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiPoint;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiPolygon;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Point;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Polygon;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.util.UUID;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Iterator;
+
+#set( $keys = $utility.getEntityKeyType($entitySet) )
+#if( $keys.size() > 1 )
+  #set( $type = $utility.getEdmType($entitySet).EntityType.Name + "Key" )
+#elseif( $keys.size() == 1 )
+  #set( $type = $keys.values().iterator().next() )
+#else
+  #set( $type = "" )
+#end
+#set($isMessages = $utility.capitalize($entitySet.Name) == "Messages")
+#set($isEvents = $utility.capitalize($entitySet.Name) == "Events")
+/** Default I$utility.capitalize($entitySet.Name) implementation. */
+public class $utility.capitalize($entitySet.Name) implements I$utility.capitalize($entitySet.Name) {
+
+    /** Proxy to communicate with service. */
+    private I$utility.capitalize($entitySet.Name) mProxy;
+
+    /**
+     * Constructor.
+     *
+     * @param proxy proxy to communicate with service.
+     */
+    public $utility.capitalize($entitySet.Name)(I$utility.capitalize($entitySet.Name) proxy) {
+        mProxy = proxy;
+    }
+
+#set( $djt = $utility.getJavaType($utility.getEdmType($entitySet).getTypeExpression()) )
+#set( $sIdx = $djt.lastIndexOf('.') + 1 )
+#set ($type = $djt.substring($sIdx))
+
+    /**
+     * {@inheritDoc}
+     */
+    public Iterator<$type> iterator() throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        return mProxy.iterator();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void clear() {
+        mProxy.clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Long count() {
+        return mProxy.count();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Query<$type, ${type}Collection> createQuery() {
+        return mProxy.createQuery();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public <S extends $type, SEC extends AbstractEntityCollection<S>> Query<S, SEC> createQuery(Class<SEC> arg0) {
+        return mProxy.createQuery(arg0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void delete(String key) throws IllegalArgumentException, HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        mProxy.delete(key); ## TODO key may be an other type
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public <S extends $type> void delete(Iterable<S> arg0) throws HttpClientException, ODataServerErrorException, ODataClientErrorException  {
+        mProxy.delete(arg0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Boolean exists(String key) throws IllegalArgumentException, HttpClientException, ODataServerErrorException, ODataClientErrorException  {
+        return mProxy.exists(key); ##TODO key may be not string
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public $type get(String key) throws IllegalArgumentException, HttpClientException, ODataServerErrorException, ODataClientErrorException  {
+        return mProxy.get(key); ## TODO
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public <S extends $type> S get(String key, Class<S> arg1) throws IllegalArgumentException, HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        return mProxy.get(key, arg1);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public ${type}Collection getAll() throws HttpClientException, ODataServerErrorException, ODataClientErrorException  {
+        return mProxy.getAll();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public <S extends $type, SEC extends AbstractEntityCollection<S>> SEC getAll(Class<SEC> arg0) throws HttpClientException, ODataServerErrorException, ODataClientErrorException  {
+        return mProxy.getAll(arg0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean retainAll(Collection<?> c) {
+        return mProxy.retainAll(c);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean removeAll(Collection<?> c) {
+        return mProxy.removeAll(c);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean remove(Object o) {
+        return mProxy.remove(o);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean add($type e) {
+        return mProxy.add(e);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean addAll(Collection<? extends $type> c) {
+        return mProxy.addAll(c);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean contains(Object o) {
+        return mProxy.contains(o);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean containsAll(Collection<?> c) {
+        return mProxy.contains(c);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public <T> T[] toArray(T[] a) {
+        return mProxy.toArray(a);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object[] toArray() {
+        return mProxy.toArray();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isEmpty() {
+        return mProxy.isEmpty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int size() {
+        return mProxy.size();
+    }
+
+#foreach( $dos in $utility.getDescendantsOrSelf($utility.getEdmType($entitySet)) )
+    #set( $djt = $utility.getJavaType($dos) )
+    #set( $sIdx = $djt.lastIndexOf('.') + 2 )
+
+    /**
+     * {@inheritDoc}
+     */
+    public $djt new$djt.substring($sIdx)(#if($isMessages)String path#elseif($isEvents)String calendarId#end) {
+        return mProxy.new$djt.substring($sIdx)(#if($isMessages)path#elseif($isEvents)calendarId#end);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public ${djt}Collection new$djt.substring($sIdx)Collection() {
+        return mProxy.new$djt.substring($sIdx)Collection();
+    }
+#end
+#if ($utility.capitalize($entitySet.Name) == "Messages")
+
+## Add specific static methods
+    /**
+     * Creates a new message in specified folder.
+     */
+    public static IMessage newMessage(IFolder folder) {
+        return OfficeEntityContainerFactory.getInstance().getEntityContainer(${utility.getEntityContainerName()}.class).getMessages().newMessage("Folders('" + folder.getId() + "')");
+    }
+
+    /**
+     * Creates a new message in default folder (Drafts).
+     */
+    public static IMessage newMessage() {
+        return OfficeEntityContainerFactory.getInstance().getEntityContainer(${utility.getEntityContainerName()}.class).getMessages().newMessage("Drafts");
+    }
+
+    /**
+     * Creates a new message in specified folder. See {@link DefaultFolder}.
+     */
+    public static IMessage newMessage(DefaultFolder folder) {
+        return OfficeEntityContainerFactory.getInstance().getEntityContainer(${utility.getEntityContainerName()}.class).getMessages().newMessage(folder.getName());
+    }
+#elseif ($utility.capitalize($entitySet.Name) == "Events")
+    /**
+     * Creates a new event in specified calendar.
+     */
+    public static IEvent newEvent(ICalendar calendar) {
+        return OfficeEntityContainerFactory.getInstance().getEntityContainer(${utility.getEntityContainerName()}.class).getEvents().newEvent(calendar.getId());
+    }
+#end
+}

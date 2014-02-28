@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright © Microsoft Open Technologies, Inc.
+
+    All Rights Reserved
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+    OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+    ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+    PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+
+    See the Apache License, Version 2.0 for the specific language
+    governing permissions and limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.microsoft.office365</groupId>
+    <artifactId>mail-calendar-contact</artifactId>
+    <version>0.11.1</version>
+  </parent>
+
+  <name>Microsoft Office 365 Mail-Calendar-Contact SDK for Java: Core</name>
+  <description>Java SDK for Office 365 Mail-Calendar-Contact services: Core</description>
+  <groupId>com.microsoft.office365</groupId>
+  <artifactId>mail-calendar-contact-core</artifactId>
+  <packaging>jar</packaging>
+
+  <properties>
+    <main.basedir>${project.parent.basedir}</main.basedir>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.msopentech.odatajclient</groupId>
+      <artifactId>odatajclient-engine</artifactId>
+      <version>${odatajclient.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>com.microsoft.office365</groupId>
+        <artifactId>mail-calendar-contact-proxy-office</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.microsoft.office365</groupId>
+        <artifactId>mail-calendar-contact-model-classes</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-all</artifactId>
+        <version>1.3</version>
+        <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Generate POJOs for tests. This needed only for running tests from eclipse. -->
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-clean-plugin</artifactId>
+            <executions>
+            	<!-- This execution will delete only generated sources during generate-test-sources phase. -->
+                <execution>
+                    <id>delete-generated-sources</id>
+                    <phase>generate-test-sources</phase>
+                    <goals>
+                        <goal>clean</goal>
+                    </goals>
+                    <configuration>
+		                <filesets>
+		                    <fileset>
+		                        <directory>${basedir}/src/generated-sources</directory>
+		                    </fileset>
+		                </filesets>
+		                <excludeDefaultDirectories>true</excludeDefaultDirectories>
+		            </configuration>
+                </execution>
+                <!-- This execution will delete both target and src/generated-sources directories during clean phase. -->
+                <execution>
+                	<id>clean</id>
+                	<phase>clean</phase>
+                	<goals>
+                		<goal>clean</goal>
+                	</goals>
+                	<configuration>
+                		<filesets>
+		                    <fileset>
+		                        <directory>${basedir}/src/generated-sources</directory>
+		                    </fileset>
+		                </filesets>
+		                <excludeDefaultDirectories>false</excludeDefaultDirectories>
+                	</configuration>
+                </execution>
+            </executions>
+      </plugin>
+       <plugin>
+            <groupId>com.microsoft.office365</groupId>
+            <artifactId>mail-calendar-contact-maven-plugin</artifactId>
+            <version>0.11.1</version>
+            <executions>
+                <execution>
+                    <id>generate-sources</id>
+                    <phase>generate-test-sources</phase>
+                    <goals>
+                      <goal>pojosV4</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
+                        <serviceRootURL>${serviceRootURL}</serviceRootURL>
+                        <basePackage>com</basePackage>
+                    </configuration>
+                </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>2.6</version>
+            <executions>
+              <execution>
+                <id>copy-generated-sources</id>
+                <phase>process-test-sources</phase>
+                <goals>
+                    <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                    <outputDirectory>${basedir}/src/generated-sources/java/com</outputDirectory>
+                    <resources>
+                        <resource>
+                            <!-- including whole ojc-plugin directory causes META-INF to be copied too -->
+                            <directory>${project.build.directory}/generated-sources/ojc-plugin/com</directory>
+                        </resource>
+                    </resources>
+                </configuration>
+              </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>1.8</version>
+            <executions>
+              <execution>
+                <phase>process-test-sources</phase>
+                <goals>
+                  <goal>add-test-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${basedir}/src/generated-sources/java</source>
+                    <source>${basedir}/src/main/java</source>
+                  </sources>
+                </configuration>
+              </execution>
+            </executions>
+        </plugin>
+        <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <inherited>true</inherited>
+        <configuration>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+          <systemPropertyVariables>
+            <propertyName>org.slf4j.simpleLogger.defaultLogLevel</propertyName>
+            <org.slf4j.simpleLogger.defaultLogLevel>ERROR</org.slf4j.simpleLogger.defaultLogLevel>
+          </systemPropertyVariables>
+        </configuration>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <excludes>
+                <exclude>**/*PerfTest.java</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <inherited>true</inherited>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+            <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>shade</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
+<!--
+		<plugin>
+	        <artifactId>maven-assembly-plugin</artifactId>
+	        <version>2.4</version>
+	        <configuration>
+	          <descriptorRefs>
+	            <descriptorRef>jar-with-dependencies</descriptorRef>
+	          </descriptorRefs>
+	        </configuration>
+	        <executions>
+	          <execution>
+	            <id>make-assembly</id>
+	            <phase>package</phase>
+	            <goals>
+	              <goal>single</goal>
+	            </goals>
+	          </execution>
+	        </executions>
+		</plugin>
+ -->
+ <!--
+		<plugin>
+			<groupId>com.github.wvengen</groupId>
+			<artifactId>proguard-maven-plugin</artifactId>
+			<version>2.0.5</version>
+			<executions>
+				<execution>
+					<phase>package</phase>
+					<goals>
+						<goal>proguard</goal>
+					</goals>
+				</execution>
+			</executions>
+			<configuration>
+				<proguardVersion>${proguard.version}</proguardVersion>
+				<injar>${project.artifactId}-${project.version}.jar</injar>
+				<outjar>${project.artifactId}-obfuscated-${project.version}.jar</outjar>
+				<options>
+					<option>-keep public class * { *; }</option>
+					<option>-ignorewarnings</option>
+				</options>
+				<libs>
+					<lib>${java.home}/lib/rt.jar</lib>
+				</libs>
+			</configuration>
+			<dependencies>
+				<dependency>
+					<groupId>net.sf.proguard</groupId>
+					<artifactId>proguard-base</artifactId>
+					<version>${proguard.version}</version>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</plugin>
+ -->
+
+    </plugins>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+      <resource>
+        <directory>..</directory>
+        <targetPath>META-INF</targetPath>
+        <includes>
+          <include>LICENSE</include>
+        </includes>
+      </resource>
+    </resources>
+
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>it</id>
+
+      <dependencies>
+        <dependency>
+          <groupId>com.msopentech.odatajclient</groupId>
+          <artifactId>odatajclient-test-auth-rproxy</artifactId>
+          <version>${project.version}</version>
+          <type>war</type>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+
+      <build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources</directory>
+            <filtering>false</filtering>
+          </testResource>
+          <testResource>
+            <directory>${basedir}/../test-auth-rproxy/src/main/resources</directory>
+            <filtering>true</filtering>
+          </testResource>
+        </testResources>
+
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>start-container</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>start</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>stop-container</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+  </profiles>
+
+</project>
