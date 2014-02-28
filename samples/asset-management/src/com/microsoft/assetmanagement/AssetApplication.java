@@ -27,13 +27,27 @@ import com.microsoft.office365.http.CookieCredentials;
 import com.microsoft.office365.http.SharepointCookieCredentials;
 import com.microsoft.office365.lists.SharepointListsClient;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AssetApplication.
+ */
 public class AssetApplication extends Application {
 
+	/** The app context. */
 	private static Context appContext;
+	
+	/** The m preferences. */
 	private AssetPreferences mPreferences;
+	
+	/** The m credentials. */
 	private Credentials mCredentials;
+	
+	/** The m sharepoint lists client. */
 	private SharepointListsClient mSharepointListsClient;
 
+	/* (non-Javadoc)
+	 * @see android.app.Application#onCreate()
+	 */
 	@Override
 	public void onCreate() {
 
@@ -45,19 +59,40 @@ public class AssetApplication extends Application {
 				PreferenceManager.getDefaultSharedPreferences(this));
 	}
 
+	/**
+	 * Gets the credentials.
+	 *
+	 * @return the credentials
+	 */
 	public Credentials getCredentials() {
 		return mCredentials;
 	}
 
+	/**
+	 * Sets the credentials.
+	 *
+	 * @param credentials the new credentials
+	 */
 	public void setCredentials(Credentials credentials) {
 		mCredentials = credentials;
 	}
 
+	/**
+	 * Handle error.
+	 *
+	 * @param throwable the throwable
+	 */
 	public void handleError(Throwable throwable) {
 		Toast.makeText(this, throwable.getMessage(), Toast.LENGTH_LONG).show();
 		Log.e("Asset", throwable.toString());
 	}
 
+	/**
+	 * Authenticate.
+	 *
+	 * @param activity the activity
+	 * @return the office future
+	 */
 	public OfficeFuture<Credentials> authenticate(Activity activity) {
 		final OfficeFuture<Credentials> result = new OfficeFuture<Credentials>();
 
@@ -84,6 +119,11 @@ public class AssetApplication extends Application {
 		return result;
 	}
 
+	/**
+	 * Checks for configuration settings.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean hasConfigurationSettings() {
 
 		String authenticationMethod = mPreferences.getAuthenticationMethod();
@@ -114,28 +154,58 @@ public class AssetApplication extends Application {
 		}
 	}
 
+	/**
+	 * Checks if is null or empty.
+	 *
+	 * @param value the value
+	 * @return true, if is null or empty
+	 */
 	private boolean isNullOrEmpty(String value) {
 
 		return value == null || value.length() == 0;
 	}
 
+	/**
+	 * Store site url.
+	 *
+	 * @param url the url
+	 * @return the boolean
+	 */
 	public Boolean storeSiteUrl(String url) {
 		mPreferences.storeSharepointListUrl(url);
 		return true;
 	}
 
+	/**
+	 * Gets the stored lists.
+	 *
+	 * @return the stored lists
+	 */
 	public ArrayList<String> getStoredLists() {
 		return mPreferences.getSharepointListNames();
 	}
 
+	/**
+	 * Checks for default list.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean hasDefaultList() {
 		return mPreferences.getLibraryName() != null;
 	}
 
+	/**
+	 * Gets the preferences.
+	 *
+	 * @return the preferences
+	 */
 	public AssetPreferences getPreferences() {
 		return mPreferences;
 	}
 
+	/**
+	 * Clear preferences.
+	 */
 	public void clearPreferences() {
 		// mPreferences.clear();
 		CookieSyncManager syncManager = CookieSyncManager.createInstance(this);
@@ -145,6 +215,11 @@ public class AssetApplication extends Application {
 		}
 	}
 
+	/**
+	 * Gets the current list client.
+	 *
+	 * @return the current list client
+	 */
 	public SharepointListsClient getCurrentListClient() {
 		String serverUrl = mPreferences.getSharepointServer();
 		String siteRelativeUrl = mPreferences.getSiteRelativeUrl();
@@ -160,6 +235,11 @@ public class AssetApplication extends Application {
 		return mSharepointListsClient;
 	}
 
+	/**
+	 * Gets the account info.
+	 *
+	 * @return the account info
+	 */
 	public String getAccountInfo() {
 		SharepointListsClient client = getCurrentListClient();
 		try {

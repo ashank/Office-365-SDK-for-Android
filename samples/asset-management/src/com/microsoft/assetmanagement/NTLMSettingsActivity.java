@@ -12,8 +12,15 @@ import android.preference.PreferenceManager;
 
 import com.microsoft.assetmanagement.R;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class NTLMSettingsActivity.
+ */
 public class NTLMSettingsActivity extends PreferenceActivity  {
 
+	/* (non-Javadoc)
+	 * @see android.preference.PreferenceActivity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle savedInstance) {
 
@@ -23,8 +30,14 @@ public class NTLMSettingsActivity extends PreferenceActivity  {
 		PreferenceManager.setDefaultValues(this, R.xml.auth_settings, false);
 	}
 
+	/**
+	 * The Class PrefsFragment.
+	 */
 	public static class PrefsFragment extends PreferenceFragment {
 
+		/* (non-Javadoc)
+		 * @see android.preference.PreferenceFragment#onCreate(android.os.Bundle)
+		 */
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);

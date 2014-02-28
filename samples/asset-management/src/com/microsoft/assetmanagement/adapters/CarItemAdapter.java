@@ -19,18 +19,36 @@ import android.widget.TextView;
 import com.microsoft.assetmanagement.R;
 import com.microsoft.assetmanagement.viewmodel.CarListViewItem;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CarItemAdapter.
+ */
 public class CarItemAdapter extends BaseAdapter {
 
+	/** The m activity. */
 	private Activity mActivity;
+	
+	/** The m data. */
 	private List<CarListViewItem> mData;
+	
+	/** The inflater. */
 	private static LayoutInflater inflater = null;
 
+	/**
+	 * Instantiates a new car item adapter.
+	 *
+	 * @param activity the activity
+	 * @param data the data
+	 */
 	public CarItemAdapter(Activity activity, List<CarListViewItem> data) {
 		mActivity = activity;
 		mData = data;
 		inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
@@ -51,16 +69,25 @@ public class CarItemAdapter extends BaseAdapter {
 		return view;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.widget.Adapter#getCount()
+	 */
 	@Override
 	public int getCount() {
 		return mData.size();
 	}
 
+	/* (non-Javadoc)
+	 * @see android.widget.Adapter#getItem(int)
+	 */
 	@Override
 	public Object getItem(int position) {
 		return mData.get(position);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.widget.Adapter#getItemId(int)
+	 */
 	@Override
 	public long getItemId(int position) {
 		return position;

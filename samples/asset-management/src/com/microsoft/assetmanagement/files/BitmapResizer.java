@@ -14,21 +14,43 @@ import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BitmapResizer.
+ */
 public class BitmapResizer {
 
+	/** The m metrics. */
 	private DisplayMetrics mMetrics;
+	
+	/** The m size. */
 	private int mSize;
 
+	/**
+	 * Instantiates a new bitmap resizer.
+	 *
+	 * @param metrics the metrics
+	 */
 	public BitmapResizer(DisplayMetrics metrics) {
 		mMetrics = metrics;
 		calculateSize();
 	}
 
+	/**
+	 * Calculate size.
+	 */
 	private void calculateSize() {
 		mSize = mMetrics.heightPixels < mMetrics.widthPixels ? mMetrics.heightPixels
 				: mMetrics.widthPixels;
 	}
 
+	/**
+	 * Read fully.
+	 *
+	 * @param input the input
+	 * @return the byte[]
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static byte[] readFully(InputStream input) throws IOException {
 		byte[] buffer = new byte[8192];
 		int bytesRead;
@@ -39,6 +61,12 @@ public class BitmapResizer {
 		return output.toByteArray();
 	}
 
+	/**
+	 * Gets the bitmap from.
+	 *
+	 * @param imageStream the image stream
+	 * @return the bitmap from
+	 */
 	public Bitmap getBitmapFrom(InputStream imageStream) {
 		Bitmap bitmap = null;
 		try {
@@ -51,6 +79,12 @@ public class BitmapResizer {
 		return bitmap;
 	}
 
+	/**
+	 * Gets the bitmap from a path
+	 *
+	 * @param path the path
+	 * @return the bitmap from
+	 */
 	public Bitmap getBitmapFrom(String path) {
 		Bitmap bitmap = null;
 		try {
@@ -84,6 +118,12 @@ public class BitmapResizer {
 		return bitmap;
 	}
 
+	/**
+	 * Gets the bitmap from.
+	 *
+	 * @param data the data
+	 * @return the bitmap from
+	 */
 	public Bitmap getBitmapFrom(byte[] data) {
 
 		Bitmap bitmap = null;

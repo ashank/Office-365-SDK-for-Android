@@ -22,14 +22,27 @@ import com.microsoft.assetmanagement.adapters.CarItemAdapter;
 import com.microsoft.assetmanagement.tasks.RetrieveCarsTask;
 import com.microsoft.assetmanagement.viewmodel.CarListViewItem;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CarListActivity.
+ */
 public class CarListActivity extends FragmentActivity {
 
+	/** The Constant ITEM. */
 	private static final String ITEM = "item";
+	
+	/** The Constant ITEM_EXTRA. */
 	private static final String ITEM_EXTRA = "data";
 
+	/** The m list view. */
 	private ListView mListView;
+	
+	/** The m application. */
 	private AssetApplication mApplication;
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,6 +61,9 @@ public class CarListActivity extends FragmentActivity {
 		});
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -69,21 +85,37 @@ public class CarListActivity extends FragmentActivity {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onBackPressed()
+	 */
 	@Override
 	public void onBackPressed() {
 		NavUtils.navigateUpFromSameTask(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.car_list_menu, menu);
 		return true;
 	}
 
+	/**
+	 * Sets the list adapter.
+	 *
+	 * @param adapter the new list adapter
+	 */
 	public void setListAdapter(CarItemAdapter adapter) {
 		mListView.setAdapter(adapter);
 	}
 
+	/**
+	 * Open selected car.
+	 *
+	 * @param position the position
+	 */
 	public void openSelectedCar(int position) {
 	    CarListViewItem carItem = (CarListViewItem) mListView.getItemAtPosition(position);
 		Intent i = new Intent(this, DisplayCarActivity.class);

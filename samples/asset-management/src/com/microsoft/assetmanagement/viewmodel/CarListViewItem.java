@@ -13,55 +13,116 @@ import android.util.Log;
 
 import com.microsoft.office365.lists.SPListItem;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CarListViewItem.
+ */
 public class CarListViewItem {
 
+	/** The m car id. */
 	private String mCarId;
+	
+	/** The m picture. */
 	private byte[] mPicture;
 	
- 	private SPListItem mListItem;
+ 	/** The m list item. */
+	 private SPListItem mListItem;
 
+	/**
+	 * Instantiates a new car list view item.
+	 */
 	public CarListViewItem() {
 		mListItem = new SPListItem();
 	}
 
+	/**
+	 * Instantiates a new car list view item.
+	 *
+	 * @param listItem the list item
+	 * @param picture the picture
+	 */
 	public CarListViewItem(SPListItem listItem, byte[] picture) {
 		mListItem = listItem;
 		mPicture = picture;
 	}
 
+	/**
+	 * Gets the list item.
+	 *
+	 * @return the list item
+	 */
 	public SPListItem getListItem() {
 		return mListItem;
 	}
 
+	/**
+	 * Populate.
+	 */
 	public void populate() {
 		mCarId = getCarId();
 	}
 
+	/**
+	 * Gets the car id.
+	 *
+	 * @return the car id
+	 */
 	public String getCarId() {
 		mCarId = safeString(mListItem.getData("Id"));
 		return mCarId;
 	}
 	
+	/**
+	 * Gets the data.
+	 *
+	 * @param key the key
+	 * @return the data
+	 */
 	public String getData(String key) {
 		return safeString(mListItem.getData(key));
 	}
 
+	/**
+	 * Sets the car id.
+	 *
+	 * @param id the new car id
+	 */
 	public void setCarId(int id) {
 		mListItem.setData("Id", id);
 	}
 	
+	/**
+	 * Sets the car title.
+	 *
+	 * @param title the new car title
+	 */
 	public void setCarTitle(String title) {
 		mListItem.setData("Title", title);
 	}
 	
+	/**
+	 * Sets the car description.
+	 *
+	 * @param description the new car description
+	 */
 	public void setCarDescription(String description) {
 		mListItem.setData("Description", description);
 	}
 
+	/**
+	 * Gets the picture.
+	 *
+	 * @return the picture
+	 */
 	public byte[] getPicture() {
 		return mPicture;
 	}
 	
+	/**
+	 * Gets the thumbnail.
+	 *
+	 * @return the thumbnail
+	 */
 	public Bitmap getThumbnail(){
 		
 		if (mPicture != null)
@@ -71,10 +132,21 @@ public class CarListViewItem {
 		return null;
 	}
 
+	/**
+	 * Sets the picture.
+	 *
+	 * @param picture the new picture
+	 */
 	public void setPicture(byte[] picture) {
 		mPicture = picture;
 	}
 	
+	/**
+	 * Safe string.
+	 *
+	 * @param object the object
+	 * @return the string
+	 */
 	private String safeString(Object object) {
 		if (object == null)
 			return "";
@@ -84,6 +156,12 @@ public class CarListViewItem {
 		return object.toString().trim();
 	}
 	
+	/**
+	 * Generate thumbnail.
+	 *
+	 * @param data the data
+	 * @return the bitmap
+	 */
 	protected Bitmap generateThumbnail(byte[] data) {
 
 		Bitmap bitmap = null;

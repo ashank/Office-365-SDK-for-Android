@@ -21,23 +21,37 @@ import com.microsoft.office365.lists.SPList;
 import com.microsoft.office365.lists.SPListItem;
 import com.microsoft.office365.lists.SharepointListsClient;
 
+/**
+ * The Class ListItemsDataSource.
+ */
 public class ListItemsDataSource {
 
+	/** The m application. */
 	private AssetApplication mApplication;
 
+	/**
+	 * Instantiates a new list items data source.
+	 *
+	 * @param application the application
+	 */
 	public ListItemsDataSource(AssetApplication application) {
 		mApplication = application;
 	}
 
+	/**
+	 * Gets the lists client.
+	 *
+	 * @return the lists client
+	 */
 	private SharepointListsClient getListsClient() {
 		return mApplication.getCurrentListClient();
 	}
 
 	/**
-	 * Returns a ArrayList<CarListViewItem> with the list item information of a car
-	 * 
+	 * Returns a ArrayList<CarListViewItem> with the list item information of a car.
+	 *
 	 * @return ArrayList<CarListViewItem>
-	 * @throws Exception
+	 * @throws Exception the exception
 	 */
 	public ArrayList<CarListViewItem> getDefaultListViewItems() throws Exception {
 		final ArrayList<CarListViewItem> items = new ArrayList<CarListViewItem>();
@@ -81,11 +95,24 @@ public class ListItemsDataSource {
 		return items;
 	}
 
+	/**
+	 * Update selected car.
+	 *
+	 * @param carViewItem the car view item
+	 * @throws Exception the exception
+	 */
 	public void updateSelectedCar(CarListViewItem carViewItem) throws Exception {
 		updatePicture(carViewItem);
 		updateCarData(carViewItem);
 	}
 
+	/**
+	 * Save new car.
+	 *
+	 * @param carViewItem the car view item
+	 * @return the int
+	 * @throws Exception the exception
+	 */
 	public int saveNewCar(final CarListViewItem carViewItem) throws Exception {
 		int pictureId = saveNewPicture(carViewItem);
 		carViewItem.setCarId(pictureId);
@@ -94,6 +121,12 @@ public class ListItemsDataSource {
 		return pictureId;
 	}
 
+	/**
+	 * Update picture.
+	 *
+	 * @param carViewItem the car view item
+	 * @throws Exception the exception
+	 */
 	private void updatePicture(CarListViewItem carViewItem) throws Exception {
 		SharepointListsClientWithFiles client = (SharepointListsClientWithFiles) getListsClient();
 		String listName = mApplication.getPreferences().getLibraryName();
@@ -107,6 +140,13 @@ public class ListItemsDataSource {
 		}
 	}
 
+	/**
+	 * Save new picture.
+	 *
+	 * @param carViewItem the car view item
+	 * @return the int
+	 * @throws Exception the exception
+	 */
 	private int saveNewPicture(CarListViewItem carViewItem) throws Exception {
 		SharepointListsClientWithFiles client = (SharepointListsClientWithFiles) getListsClient();
 		String listName = mApplication.getPreferences().getLibraryName();
@@ -121,6 +161,12 @@ public class ListItemsDataSource {
 		return Integer.parseInt(id);
 	}
 
+	/**
+	 * Update car data.
+	 *
+	 * @param carViewItem the car view item
+	 * @throws Exception the exception
+	 */
 	private void updateCarData(CarListViewItem carViewItem) throws Exception {
 		SharepointListsClient client = getListsClient();
 		String listName = mApplication.getPreferences().getLibraryName();
@@ -131,6 +177,11 @@ public class ListItemsDataSource {
 		client.updateListItem(item, carList).get();
 	}
 
+	/**
+	 * Delete car.
+	 *
+	 * @param mCarViewItem the m car view item
+	 */
 	public void deleteCar(CarListViewItem mCarViewItem) {
 		SharepointListsClient client = getListsClient();
 		String listName = mApplication.getPreferences().getLibraryName();

@@ -42,23 +42,48 @@ import com.microsoft.assetmanagement.tasks.UpdateCarTask;
 import com.microsoft.assetmanagement.viewmodel.CarListViewItem;
 import com.microsoft.office365.lists.SPListItem;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DisplayCarActivity.
+ */
 public class DisplayCarActivity extends FragmentActivity {
 
+	/** The m list adapter. */
 	private DisplayCarAdapter mListAdapter;
+	
+	/** The m car view item. */
 	private CarListViewItem mCarViewItem;
+	
+	/** The m application. */
 	private AssetApplication mApplication;
+	
+	/** The m is new. */
 	private boolean mIsNew;
 
+	/** The m car title. */
 	private EditText mCarTitle;
+	
+	/** The m car description. */
 	private EditText mCarDescription;
 
+	/** The Constant CAMARA_REQUEST_CODE. */
 	final static int CAMARA_REQUEST_CODE = 1000;
+	
+	/** The Constant SELECT_PHOTO. */
 	final static int SELECT_PHOTO = 1001;
 	
+	/**
+	 * Sets the car view item.
+	 *
+	 * @param carListViewItem the new car view item
+	 */
 	public void setCarViewItem(CarListViewItem carListViewItem) {
 		mCarViewItem = carListViewItem;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -92,6 +117,9 @@ public class DisplayCarActivity extends FragmentActivity {
         }
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -117,10 +145,16 @@ public class DisplayCarActivity extends FragmentActivity {
 		}
 	}
 
+	/**
+	 * Delete car.
+	 */
 	private void deleteCar() {
 		new DeleteCarTask(this).execute(mCarViewItem);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
@@ -131,12 +165,18 @@ public class DisplayCarActivity extends FragmentActivity {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.car_view_menu, menu);
 		return true;
 	}
 
+	/**
+	 * Select picture.
+	 */
 	private void selectPicture() {
 		final Activity that = this;
 
@@ -180,8 +220,15 @@ public class DisplayCarActivity extends FragmentActivity {
 		});
 	}
 
+	/** The m current photo path. */
 	String mCurrentPhotoPath;
 
+	/**
+	 * Creates the image file.
+	 *
+	 * @return the file
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@SuppressLint("SimpleDateFormat")
 	private File createImageFile() throws IOException {
 		// Create an image file name
@@ -199,6 +246,9 @@ public class DisplayCarActivity extends FragmentActivity {
 		return image;
 	}
 
+	/**
+	 * Dispatch take picture intent.
+	 */
 	private void dispatchTakePictureIntent() {
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		// Ensure that there's a camera activity to handle the intent
@@ -218,6 +268,9 @@ public class DisplayCarActivity extends FragmentActivity {
 		}
 	}
 
+	/**
+	 * Save action.
+	 */
 	private void saveAction() {
 		hideSoftPad();
 		setCarData();
@@ -240,16 +293,28 @@ public class DisplayCarActivity extends FragmentActivity {
 		}
 	}
 
+	/**
+	 * Sets the car data.
+	 */
 	private void setCarData() {
 		hideSoftPad();
 		mCarViewItem.setCarTitle(getStringFromEdit(mCarTitle));
 		mCarViewItem.setCarDescription(getStringFromEdit(mCarDescription));
 	}
 
+	/**
+	 * Gets the string from edit.
+	 *
+	 * @param text the text
+	 * @return the string from edit
+	 */
 	private String getStringFromEdit(EditText text) {
 		return text.getText().toString().trim();
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onActivityResult(int, int, android.content.Intent)
+	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		final byte[] bytes = getImageData(requestCode, resultCode, data);
@@ -262,6 +327,14 @@ public class DisplayCarActivity extends FragmentActivity {
 		}
 	}
 
+	/**
+	 * Gets the image data.
+	 *
+	 * @param requestCode the request code
+	 * @param resultCode the result code
+	 * @param data the data
+	 * @return the image data
+	 */
 	private final byte[] getImageData(int requestCode, int resultCode, Intent data) {
 
 		DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -304,6 +377,9 @@ public class DisplayCarActivity extends FragmentActivity {
 		return null;
 	}
 
+	/**
+	 * Hide soft pad.
+	 */
 	private void hideSoftPad() {
 		((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE)).toggleSoftInput(
 				InputMethodManager.SHOW_IMPLICIT, 0);

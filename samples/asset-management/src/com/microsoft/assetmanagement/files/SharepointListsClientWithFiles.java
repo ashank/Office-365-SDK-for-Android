@@ -18,6 +18,10 @@ import com.microsoft.office365.OfficeFuture;
 import com.microsoft.office365.OfficeEntity;
 import com.microsoft.office365.lists.SharepointListsClient;
 
+/**
+ * This class will be replaced when the new Files API is released to production
+ */
+
 public class SharepointListsClientWithFiles extends SharepointListsClient {
 
 	public SharepointListsClientWithFiles(String serverUrl, String siteRelativeUrl,
@@ -161,6 +165,7 @@ public class SharepointListsClientWithFiles extends SharepointListsClient {
 			final byte[] fileContent) {
 		final OfficeFuture<SPFile> result = new OfficeFuture<SPFile>();
 
+		//The name of the library not always matches the title, here is how we get the real path
 		String getRootFolderUrl = getSiteUrl() + String.format("_api/web/lists/GetByTitle('%s')/RootFolder", urlEncode(documentLibraryName));
 		
 		executeRequestJson(getRootFolderUrl, "GET")
@@ -171,7 +176,7 @@ public class SharepointListsClientWithFiles extends SharepointListsClient {
 					try {
 
 						String libraryServerRelativeUrl = json.getJSONObject("d").getString("ServerRelativeUrl");
-						
+
 						String getListUrl = getSiteUrl()
 								+ "_api/web/GetFolderByServerRelativeUrl('%s')/Files/add(url='%s',overwrite=true)";
 						getListUrl = String.format(getListUrl,  urlEncode(libraryServerRelativeUrl), urlEncode(fileName));

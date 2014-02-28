@@ -15,10 +15,18 @@ import android.view.MenuItem;
 import com.microsoft.office365.Action;
 import com.microsoft.office365.Credentials;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MainActivity.
+ */
 public class MainActivity extends Activity {
 
+	/** The m application. */
 	private AssetApplication mApplication;
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -27,12 +35,18 @@ public class MainActivity extends Activity {
 		mApplication = (AssetApplication) getApplication();
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -65,6 +79,9 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Check preferences.
+	 */
 	private void checkPreferences() {
 		Intent i = null;
 		boolean hasConfig = mApplication.hasConfigurationSettings();

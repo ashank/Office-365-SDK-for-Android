@@ -15,14 +15,32 @@ import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
 import android.widget.Toast;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class UpdateCarTask.
+ */
 public class UpdateCarTask extends AsyncTask<CarListViewItem, Void, Void> {
 
+	/** The m source. */
 	private ListItemsDataSource mSource;
+	
+	/** The m activity. */
 	private Activity mActivity;
+	
+	/** The m dialog. */
 	private ProgressDialog mDialog;
+	
+	/** The m application. */
 	private AssetApplication mApplication;
+	
+	/** The m throwable. */
 	private Throwable mThrowable;
 
+	/**
+	 * Instantiates a new update car task.
+	 *
+	 * @param activity the activity
+	 */
 	public UpdateCarTask(Activity activity) {
 		mActivity = activity;
 		mDialog = new ProgressDialog(mActivity);
@@ -30,6 +48,9 @@ public class UpdateCarTask extends AsyncTask<CarListViewItem, Void, Void> {
 		mSource = new ListItemsDataSource(mApplication);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.os.AsyncTask#onPreExecute()
+	 */
 	protected void onPreExecute() {
 		mDialog.setTitle("Updating car...");
 		mDialog.setMessage("Please wait.");
@@ -38,6 +59,9 @@ public class UpdateCarTask extends AsyncTask<CarListViewItem, Void, Void> {
 		mDialog.show();
 	}
 
+	/* (non-Javadoc)
+	 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+	 */
 	@Override
 	protected void onPostExecute(Void result) {
 		if (mDialog.isShowing()) {
@@ -53,6 +77,9 @@ public class UpdateCarTask extends AsyncTask<CarListViewItem, Void, Void> {
 		NavUtils.navigateUpFromSameTask(mActivity);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.os.AsyncTask#doInBackground(Params[])
+	 */
 	@Override
 	protected Void doInBackground(CarListViewItem... params) {
 		CarListViewItem viewItem = params[0];
