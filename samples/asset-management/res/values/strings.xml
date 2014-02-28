@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Asset Management</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_sharepoint_lists">Available Cars</string>
+    <string name="title_activity_sharepoint_list_item">List Item</string>
+    <string name="title_activity_display_car">Car Information</string>
+    <string name="title_activity_app_settings">Application Settings</string>
+    <string name="title_activity_ntml_settings">NTLM Settings</string>
+    <string name="title_activity_oauth_settings">OAuth Settings</string>
+
+</resources>

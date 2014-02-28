@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.microsoft.assetmanagement"
+    android:screenOrientation="portrait"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="16" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.microsoft.assetmanagement.AssetApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/contoso_32_agave"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.microsoft.assetmanagement.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.microsoft.assetmanagement.AppSettingsActivity"
+            android:label="@string/title_activity_app_settings" >
+        </activity>
+        <activity
+            android:name="com.microsoft.assetmanagement.OAuthSettingActivity"
+            android:label="@string/title_activity_oauth_settings" >
+        </activity>
+        <activity
+            android:name="com.microsoft.assetmanagement.NTLMSettingsActivity"
+            android:label="@string/title_activity_ntml_settings" >
+        </activity>
+        <activity
+            android:name="com.microsoft.assetmanagement.CarListActivity"
+            android:label="@string/title_activity_sharepoint_lists"
+            android:parentActivityName="com.microsoft.assetmanagement.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.microsoft.assetmanagement.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.microsoft.assetmanagement.DisplayCarActivity"
+            android:label="@string/title_activity_display_car"
+            android:parentActivityName="com.microsoft.assetmanagement.CarListActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.microsoft.assetmanagement.CarListActivity" />
+        </activity>
+        <activity
+            android:name="com.microsoft.assetmanagement.SharepointListItemActivity"
+            android:label="@string/title_activity_sharepoint_list_item" >
+        </activity>
+    </application>
+
+</manifest>

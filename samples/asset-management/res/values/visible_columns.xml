@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="visibleListColumns">
+        <item>ID</item>
+        <item>Title</item>
+        <item>Description</item>
+        <item>Thumbnail</item>
+    </string-array>
+
+</resources>

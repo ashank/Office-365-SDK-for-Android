@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lookup_array">
+        <item>Starts With</item>
+        <item>Ends With</item>
+        <item>Equals</item>
+    </string-array>
+</resources>

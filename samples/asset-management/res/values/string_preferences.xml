@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_activity_lists_preference">Settings</string>
+
+    <!-- General settings -->
+    <string name="pref_header_general">General</string>
+    <string name="pref_sharepoint_url">Sharepoint URL</string>
+    <string name="pref_default_sharepoint_url">http://a-sharepoint-server</string>
+    <string name="pref_NTLM_user">NTLM User</string>
+    <string name="pref_default_NTLM_user">user name</string>
+    <string name="pref_NTLM_password">NTLM Password</string>
+    <string name="pref_default_NTLM_password">NTLM Password</string>
+
+</resources>

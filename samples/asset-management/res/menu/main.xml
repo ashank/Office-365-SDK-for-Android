@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_preferences"
+        android:icon="@drawable/ic_action_settings"
+        android:orderInCategory="102"
+        android:showAsAction="ifRoom|withText">
+    </item>
+    <item
+        android:id="@+id/menu_show_cars"
+        android:icon="@drawable/ic_action_view_as_list"
+        android:orderInCategory="101"
+        android:showAsAction="ifRoom|withText"
+        android:title="Show Cars">
+    </item>
+
+</menu>
