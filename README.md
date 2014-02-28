@@ -26,7 +26,7 @@ To help you get started quickly, we have created sample applications, including:
 
 •	Asset management app that allows the user to view the items in a particular list of a SharePoint site, add a new item with a picture into this list, update and delete an item from this list. 
 
-•	Mail contact and calendar app that lets the user view all his mails from the drafts folder, events from all his calendars and all his contacts. 
+•	Mail contact and calendar app that lets the user view all his mails from the drafts folder and send mail, events from all his calendars and all his contacts. 
 
 Additionally we are working on an SDK that covers the discovery API. Until then please look at the files-discovery-app that we have written that uses the discovery API to get the list of files from my-lists on SharePoint. 
 
