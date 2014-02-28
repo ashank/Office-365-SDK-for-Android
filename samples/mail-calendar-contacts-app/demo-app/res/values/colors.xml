@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © Microsoft Open Technologies, Inc.
+
+    All Rights Reserved
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+    OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+    ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+    PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+
+    See the Apache License, Version 2.0 for the specific language
+    governing permissions and limitations under the License.
+
+-->
+<resources>
+    <color name="background_color">#FFE8E8E8</color>
+
+    <color name="black">#FF000000</color>
+    <color name="black75">#C0000000</color>
+    <color name="text_light_grey">#FFD7D7D7</color>
+    <color name="text_dark_grey">#FF494747</color>
+    <color name="text_med_grey">#FFAAAAAA</color>
+    <color name="text_grey">#FFCCCCCC</color>
+    <color name="medium_grey">#FF363636</color>
+    <color name="dark_grey">#FF232323</color>
+    <color name="grey">#FFCCCCCC</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="warning">#FFF7941D</color>
+
+    <!-- TODO: add colors for tabs -->
+    <color name="blue75">#C02C579B</color>			<!-- inbox	-->
+    <color name="blue75_dark">#C02C579B</color>		<!-- inbox tabs	-->
+    <color name="green75">#C0217346</color>			<!-- archive -->
+    <color name="green75_dark">#C0217346</color>	<!-- archive tabs -->
+    <color name="red75">#C0EB3C00</color>			<!-- later -->
+    <color name="red75_dark">#C0EB3C00</color>		<!-- later tabs -->
+
+    <color name="drop_shadow">#FF737F88</color>
+    <color name="drop_shadow_75">#C0737F88</color>
+    <color name="blue">#6081B4</color>
+    <color name="background_move_to_archive">#FF33CC00</color>
+    <color name="background_remove_email">#FFCC0033</color>
+    <color name="background_remind_later">#FFDDDD00</color>
+    <color name="background_move_to_lists">#FF963200</color>
+    <color name="background_move_to_mailbox">#FF05B8CC</color>
+
+    <!-- Merged -->
+    <color name="white_transparent">#00000000</color>
+    <color name="light_gray">#FFA5A5A5</color>
+    <color name="medium_grey">#FF626262</color>
+    <color name="dark_grey">#FF3b3b3b</color>
+    <color name="button_background">#FFE7DEE7</color>
+    <color name="progress_bar_background">#FFE1E1E1</color>
+
+</resources>

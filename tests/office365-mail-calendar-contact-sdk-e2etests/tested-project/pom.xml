@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.foo.bar</groupId>
+	<artifactId>my-android-project</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>apk</packaging>
+	<name>my-android-project - Application</name>
+
+	<properties>
+		<android.plugin.version>3.8.2</android.plugin.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>android</groupId>
+			<artifactId>android</artifactId>
+			<version>4.4.2_r2</version>
+			<scope>provided</scope>
+		</dependency>
+        <dependency>
+            <groupId>android.support</groupId>
+            <artifactId>compatibility-v4</artifactId>
+			<version>19.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.office365</groupId>
+            <artifactId>mail-calendar-contact-core</artifactId>
+            <version>0.11.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.adal</groupId>
+            <artifactId>adal</artifactId>
+            <version>0.5-alpha</version>
+            <type>aar</type>
+        </dependency>
+	</dependencies>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<version>${android.plugin.version}</version>
+				<configuration>
+					<sdk>
+						<platform>16</platform>
+					</sdk> 
+					<dexCoreLibrary>true</dexCoreLibrary>
+				</configuration>				
+			</plugin>
+		</plugins>
+	</build>
+</project>

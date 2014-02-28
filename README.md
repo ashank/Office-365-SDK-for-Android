@@ -26,7 +26,7 @@ To help you get started quickly, we have created sample applications, including:
 
 •	Asset management app that allows the user to view the items in a particular list of a SharePoint site, add a new item with a picture into this list, update and delete an item from this list. 
 
-•	Mail contact and calendar app that lets the user view all his mails from the drafts folder, events from all his calendars and all his contacts. 
+•	Mail contact and calendar app that lets the user view all his mails from the drafts folder and send mail, events from all his calendars and all his contacts. 
 
 Additionally we are working on an SDK that covers the discovery API. Until then please look at the files-discovery-app that we have written that uses the discovery API to get the list of files from my-lists on SharePoint. 
 
@@ -69,7 +69,7 @@ All the code that calls into the lists SDK is in the /assetmanagement/src/com/mi
   
   o	Delete a list item – Refer to deleteCar method
 
-Note: The app uses cookie based authentication.
+Note: The app uses cookie based authentication and has been tested on Android versions API 14 and 17 .
 
 Files-discovery-app
 
@@ -121,6 +121,11 @@ String sharepointResourceId = fileService.getServiceResourceId();
 String endpointUrl = fileService.getServiceEndpointUri();
 String sharepointUrl = endpointUrl.split("_api")[0];
 FileClient fileClient = mApplication.getFileClient(DiscoveryFragment.this.getActivity(), sharepointResourceId, sharepointUrl).get();
+
+License
+-------
+
+Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. Licensed under the Apache License, Version 2.0 (the "License"); 
 
 	
 

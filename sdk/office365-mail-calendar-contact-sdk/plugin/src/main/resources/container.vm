@@ -1,0 +1,126 @@
+#*
+ * Copyright © Microsoft Open Technologies, Inc.
+ *
+ * All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+ * ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+ * PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+ *
+ * See the Apache License, Version 2.0 for the specific language
+ * governing permissions and limitations under the License.
+ *#
+#set( $clsSuffix = ".class" )
+#set( $useFullEntityContainerClassName = $utility.capitalize($container.Name) == "EntityContainer")
+package ${package};
+
+import com.msopentech.odatajclient.engine.client.http.HttpMethod;
+import com.msopentech.odatajclient.engine.client.http.HttpClientException;
+import com.msopentech.odatajclient.engine.communication.ODataClientErrorException;
+import com.msopentech.odatajclient.engine.communication.ODataServerErrorException;
+import com.msopentech.odatajclient.proxy.api.annotations.Namespace;
+#if(!$useFullEntityContainerClassName)import com.msopentech.odatajclient.proxy.api.annotations.EntityContainer;#end
+import com.msopentech.odatajclient.proxy.api.annotations.Operation;
+import com.msopentech.odatajclient.proxy.api.annotations.Parameter;
+import com.msopentech.odatajclient.proxy.api.annotations.Singleton;
+import com.msopentech.odatajclient.engine.data.metadata.edm.v3.ParameterMode;
+import com.msopentech.odatajclient.proxy.api.AbstractContainer;
+
+#foreach($ns in $namespaces)
+import ${basePackage}.${ns}.*;
+import ${basePackage}.${ns}.types.*;
+#end
+
+// EdmSimpleType property imports
+import com.msopentech.odatajclient.engine.data.ODataDuration;
+import com.msopentech.odatajclient.engine.data.ODataTimestamp;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Geospatial;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.GeospatialCollection;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.LineString;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiLineString;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiPoint;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiPolygon;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Point;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Polygon;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.util.UUID;
+import java.io.Serializable;
+import java.util.Collection;
+
+/**
+ * Represents $container.Name entity container.
+ */
+@Namespace("$namespace")
+@#if($useFullEntityContainerClassName)com.msopentech.odatajclient.proxy.api.annotations.#end#**#EntityContainer(name = "$container.Name",
+  isDefaultEntityContainer = $container.DefaultEntityContainer)
+public interface $utility.capitalize($container.Name) extends AbstractContainer {
+
+#foreach($entitySet in $container.EntitySets)
+    /**
+     * Gets $utility.capitalize($entitySet.Name) entity set.
+     *
+     * @return $utility.capitalize($entitySet.Name) entity set.
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    I$utility.capitalize($entitySet.Name) get$utility.capitalize($entitySet.Name)() throws HttpClientException, ODataServerErrorException, ODataClientErrorException ;
+
+#end
+
+#foreach($singleton in $container.Singletons)
+    /**
+     * Gets $singleton.Name singleton instance.
+     *
+     * @return $singleton.Name singleton instance.
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    @Singleton(name = "$singleton.Name",
+               type = "$singleton.Type")
+    $utility.getJavaType($singleton.Type) $utility.uncapitalize($singleton.Name)() throws HttpClientException, ODataServerErrorException, ODataClientErrorException ;
+
+#end
+
+#foreach($operation in $container.FunctionImports)
+  #if( !$operation.isIsBindable() )
+    /**
+     * Invokes $operation.Name function import.
+#foreach($param in $operation.Parameters)
+     * @param $utility.uncapitalize($param.Name) ${param.Name}.
+#end
+#if ($operation.ReturnType)
+     * @return ${operation.ReturnType.Type}.
+#end
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    @FunctionImport(name = "$operation.Name" #if($operation.EntitySet),
+                    entitySet = $operation.EntitySet$clsSuffix#end #if($operation.EntitySetPath),
+                    entitySetPath = $operation.EntitySetPath#end #if($operation.isIsComposable),
+                    isComposable = $operation.isIsComposable#end #if($operation.isIsSideEffecting),
+                    isSideEffecting = $operation.isIsSideEffecting#end #if($operation.HttpMethod),
+                    httpMethod = HttpMethod.$operation.HttpMethod#end #if($operation.ReturnType),
+                    returnType = "$operation.ReturnType"#end)
+    #if($operation.ReturnType)$utility.getJavaType($operation.ReturnType)#{else}void#end $utility.uncapitalize($operation.Name) throws HttpClientException, ODataServerErrorException, ODataClientErrorException (
+    #if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+      *#    @Parameter(name = "$param.Name", type = "$param.Type", nullable = $param.Nullable#if ($param.Mode), mode = ParameterMode.$param.Mode.toString()#end) $utility.getJavaType($param.Type) $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end#*
+    *##end);
+  #end
+#end
+}

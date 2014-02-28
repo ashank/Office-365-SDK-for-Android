@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © Microsoft Open Technologies, Inc.
+
+    All Rights Reserved
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+    OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+    ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+    PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+
+    See the Apache License, Version 2.0 for the specific language
+    governing permissions and limitations under the License.
+
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/mail_item_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+            <!-- TBD: change images -->
+
+            <ImageView
+                android:id="@+id/mail_item_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:visibility="invisible"
+                android:src="@drawable/abc_ic_cab_done_holo_light" />
+
+            <ImageView
+                android:id="@+id/mail_item_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:visibility="invisible"
+                android:src="@android:drawable/ic_popup_reminder" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/mail_item_foreground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        >
+
+        <!-- TBD insert and customize icon -->
+        <ImageView
+            android:id="@+id/additional_property_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:drawable/star_off"
+            android:contentDescription="@string/email_new"
+            android:layout_margin="8dp"
+            android:alpha="0.8"/>
+
+	    <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        >
+
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal" >
+
+	            <TextView
+	                android:id="@+id/mailSenderName"
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1" />
+
+	            <TextView
+	                android:id="@+id/mailSentTime"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textColor="@color/text_med_grey" />
+	        </LinearLayout>
+
+	        <LinearLayout 
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal"
+	            >
+	            <TextView
+	            android:id="@+id/mailSubject"
+	            android:layout_width="0dp"
+	            android:layout_weight="1"
+	            android:layout_height="wrap_content"
+	            android:textStyle="bold"
+	            android:textSize="7pt"
+	            android:fontFamily=""/>
+	            
+	            <ImageView
+	                android:id="@+id/mail_attachment_icon"
+	                android:layout_height="fill_parent"
+	                android:layout_width="wrap_content"
+	                android:scaleType="fitEnd"
+	                android:src="@drawable/ic_action_attach" />
+	            
+	        </LinearLayout>
+
+	        <TextView
+	            android:id="@+id/mailContent"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:ellipsize="end"
+	            android:maxLines="2"
+	            android:minLines="2"
+	            android:scrollHorizontally="true"
+	            android:textColor="@color/text_med_grey" />
+	    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:background="@drawable/abc_ic_go_search_api_holo_light"
+        />
+
+    </LinearLayout>
+
+</FrameLayout>

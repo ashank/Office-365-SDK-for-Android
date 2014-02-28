@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright © Microsoft Open Technologies, Inc.
+
+    All Rights Reserved
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+    OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+    ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+    PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+
+    See the Apache License, Version 2.0 for the specific language
+    governing permissions and limitations under the License.
+
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    >
+    
+    <ImageView 
+        android:id="@+id/drawer_item_icon"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+       	android:layout_marginRight="5sp"
+       	android:layout_marginTop="3sp"
+        android:scaleType="fitXY"
+        />
+    
+    <TextView 
+        android:id="@+id/drawer_item_title"
+        android:layout_width="0sp"
+       	android:layout_height="wrap_content"
+       	android:layout_weight="1"
+       	android:padding="0sp"
+       	android:layout_gravity="center_vertical"
+       	android:textColor="@color/black"
+        />
+    
+    <TextView 
+        android:id="@+id/drawer_item_count"
+        android:layout_width="wrap_content"
+       	android:layout_height="wrap_content"
+       	android:layout_marginLeft="5sp"
+       	android:layout_marginTop="5sp"
+       	android:layout_gravity="center_vertical"
+       	android:textColor="@color/grey"
+        />
+
+</LinearLayout>

@@ -1,0 +1,269 @@
+#*
+ * Copyright © Microsoft Open Technologies, Inc.
+ *
+ * All Rights Reserved
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+ * ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+ * PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+ *
+ * See the Apache License, Version 2.0 for the specific language
+ * governing permissions and limitations under the License.
+ *#
+package ${package};
+
+import com.msopentech.odatajclient.engine.client.http.HttpClientException;
+import com.msopentech.odatajclient.engine.communication.ODataClientErrorException;
+import com.msopentech.odatajclient.engine.communication.ODataServerErrorException;
+
+import com.msopentech.odatajclient.proxy.api.AbstractEntitySet;
+import com.microsoft.office.proxy.OfficeEntityContainerFactory;
+import com.msopentech.odatajclient.proxy.api.annotations.EntitySet;
+import com.msopentech.odatajclient.proxy.api.annotations.Singleton;
+import com.msopentech.odatajclient.proxy.api.annotations.CompoundKey;
+import com.msopentech.odatajclient.proxy.api.annotations.CompoundKeyElement;
+#foreach($ns in $namespaces)
+#if(!$ns.endsWith("system"))import ${basePackage}.${ns}.*;#end
+import ${basePackage}.${ns}.types.*;
+#end
+
+// EdmSimpleType property imports
+import com.msopentech.odatajclient.engine.data.ODataDuration;
+import com.msopentech.odatajclient.engine.data.ODataTimestamp;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Geospatial;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.GeospatialCollection;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.LineString;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiLineString;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiPoint;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.MultiPolygon;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Point;
+import com.msopentech.odatajclient.engine.data.metadata.edm.geospatial.Polygon;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.util.UUID;
+import java.io.Serializable;
+import java.util.Collection;
+
+#set( $keys = $utility.getEntityKeyType($singleton) )
+#if( $keys.size() > 1 )
+  #set( $type = $utility.getEdmType($singleton).EntityType.Name + "Key" )
+#elseif( $keys.size() == 1 )
+  #set( $type = $keys.values().iterator().next() )
+#else
+  #set( $type = "" )
+#end
+
+/** Represents $singleton.Name singleton. */
+public class $utility.capitalize($singleton.Name) {
+
+#set($entityType = $utility.getEntityTypeByName($singleton.Type))
+#set($hasValue = true)
+    /** Proxy to communicate with service. */
+    private static I$entityType.Name sInstance = null;
+
+    /** Entity container instance. */
+    private static $utility.getEntityContainerName() sContainer = null;
+
+    /**
+     * Pushes pending changes to endpoint.
+     *
+     * @return this singleton instance.
+     */
+    public static I$entityType.Name flush() throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        OfficeEntityContainerFactory.getInstance().getEntityContainer(${utility.getEntityContainerName()}.class).flush();
+        return sInstance;
+    }
+
+#foreach ($i in [1..20])##emulate while loop. Assumed that no more than 20 level inheritance is provided
+#if ($hasValue)
+#foreach ($property in $entityType.Properties)
+
+    /**
+     * Gets a value of $property.Name property.
+     *
+     * @return a value of $property.Name property.
+     */
+    public static $utility.getJavaType($property.Type) get$utility.capitalize($property.Name)() {
+        initIfNeeded();
+        return sInstance.get$utility.capitalize($property.Name)();
+    }
+
+    /**
+     * Sets a value of $property.Name property.
+     *
+     * @param _$utility.uncapitalize($property.Name) new $property.Name value.
+     * @return $singleton.Name instance.
+     */
+    public static I$entityType.Name set$utility.capitalize($property.Name)(final $utility.getJavaType($property.Type) _$utility.uncapitalize($property.Name)) {
+        initIfNeeded();
+        return sInstance.set$utility.capitalize($property.Name)(_$utility.uncapitalize($property.Name));
+    }
+#end
+#foreach($property in $entityType.NavigationProperties)
+#set( $type = $utility.getNavigationType($property) )
+## Assumption: all collections directly accessible from singleton may be used as entity sets.
+#if ($type.startsWith("Collection(") && $type.endsWith(")"))
+    /**
+     * Gets $property.Name entity set.
+     *
+     * @return $property.Name collection.
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    public static I$utility.capitalize($property.Name) get$utility.capitalize($property.Name)() throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        initIfNeeded();
+        return sContainer.get$utility.capitalize($property.Name)();
+    }
+## no setter for entity sets
+#else
+    /**
+     * Gets $property.Name collection.
+     *
+     * @return $property.Name collection.
+     */
+    public static $utility.getJavaType($type) get$utility.capitalize($property.Name)() throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        initIfNeeded();
+        return sInstance.get$utility.capitalize($property.Name)();
+    }
+#*
+    public static void set$utility.capitalize($property.Name)(final $utility.getJavaType($type) _$utility.uncapitalize($property.Name)) {
+        initIfNeeded();
+        sInstance.set$utility.capitalize($property.Name)(_$utility.uncapitalize($property.Name));
+    }*#
+#end
+#end
+#foreach($operation in $utility.getFunctionsBoundTo($entityType.Name, false))
+    /**
+     * Invokes $operation.Name function on this ${singleton.Name}.
+#foreach($param in $operation.Parameters)
+     * @param $utility.uncapitalize($param.Name) ${param.Name}.
+#end
+#if ($operation.ReturnType)
+     * @return ${operation.ReturnType.Type}.
+#end
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    public static #if($operation.ReturnType.Type)$utility.getJavaType($operation.ReturnType.Type)#{else}void#end $utility.uncapitalize($operation.Name) throws HttpClientException, ODataServerErrorException, ODataClientErrorException (
+    #if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+        *##if( !$utility.isSameType($entityType.Name, $param.Type, false) )#*
+      *#   $utility.getJavaType($param.Type) $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end
+    #end#*
+    *##end) {
+        #if($operation.ReturnType.Type)return #{end}mInstance.$utility.uncapitalize($operation.Name)(
+        #if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+        *##if( !$utility.isSameType($entityType.Name, $param.Type, false) )#*
+      *#    $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end
+    #end#*
+    *##end);
+    }
+#end
+#foreach($operation in $utility.getActionsBoundTo($entityType.Name, false))
+    /**
+     * Invokes $operation.Name action on this ${singleton.Name}.
+#foreach($param in $operation.Parameters)
+     * @param $utility.uncapitalize($param.Name) ${param.Name}.
+#end
+#if ($operation.ReturnType)
+     * @return ${operation.ReturnType.Type}.
+#end
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     */
+    public static #if($operation.ReturnType.Type)$utility.getJavaType($operation.ReturnType.Type)#{else}void#end $utility.uncapitalize($operation.Name) throws HttpClientException, ODataServerErrorException, ODataClientErrorException (
+    #if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+        *##if( !$utility.isSameType($entityType.Name, $param.Type, false) )#*
+      *#   $utility.getJavaType($param.Type) $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end
+    #end#*
+    *##end) {
+        initIfNeeded();
+        #if($operation.ReturnType.Type)return #{end}sInstance.$utility.uncapitalize($operation.Name)(
+        #if($operation.Parameters)
+      #set( $count = $operation.Parameters.size() )#*
+      *##foreach($param in $operation.Parameters)#*
+        *##set( $count = $count - 1 )#*
+        *##if( !$utility.isSameType($entityType.Name, $param.Type, false) )#*
+      *#    $utility.uncapitalize($param.Name)#if( $count > 0 ), #end
+
+    #end
+    #end#*
+    *##end);
+    }
+#end
+#if($entityType.isHasStream())
+    /**
+     * Sets a value of stream property for this ${singleton.Name}.
+     *
+     * @param stream stream.
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     * @return current I$utility.capitalize($entityType.Name) instance.
+     */
+    public static void setStream(java.io.InputStream stream) throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        initIfNeeded();
+        sInstance.setStream(stream);
+    }
+    /**
+     * Sets a value of stream property for this ${singleton.Name}.
+     *
+     * @param stream stream.
+     * @throws ODataClientErrorException if server returned status code from 400 to 499.
+     * @throws ODataServerErrorException if server returned status code from 500 to 599.
+     * @throws HttpClientException if any error occured during parsing server response.
+     * @return current I$utility.capitalize($entityType.Name) instance.
+     */
+    public static java.io.InputStream getStream() throws HttpClientException, ODataServerErrorException, ODataClientErrorException {
+        initIfNeeded();
+        return sInstance.getStream();
+    }
+#end
+#if ($utility.getEntityTypeByName($entityType.BaseType))
+#set($hasValue = true)
+#else
+#set($hasValue = false)
+#end
+#set($entityType = $utility.getEntityTypeByName($entityType.BaseType))
+#end
+#end
+
+    /** Initializes private values of this $singleton.Name instance on first invocation. */
+    private static void initIfNeeded() throws IllegalStateException {
+        if (sInstance != null) {
+            return;
+        }
+        
+        OfficeEntityContainerFactory factory = OfficeEntityContainerFactory.getInstance();
+        if (factory == null) {
+            throw new IllegalStateException("You must specify service base url in Configuration");
+        }
+        
+        sContainer = factory.getEntityContainer(${utility.getEntityContainerName()}.class);
+        sInstance = sContainer.me();
+    }
+}

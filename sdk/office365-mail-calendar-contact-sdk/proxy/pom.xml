@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright © Microsoft Open Technologies, Inc.
+
+    All Rights Reserved
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
+    OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+    ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
+    PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
+
+    See the Apache License, Version 2.0 for the specific language
+    governing permissions and limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.microsoft.office365</groupId>
+		<artifactId>mail-calendar-contact</artifactId>
+		<version>0.11.1</version>
+	</parent>
+	<artifactId>mail-calendar-contact-proxy</artifactId>
+	<packaging>pom</packaging>
+	<name>Microsoft Office 365 Mail-Calendar-Contact SDK for Java: Proxy</name>
+	<description>Java SDK for Office 365 Mail-Calendar-Contact services: Proxy</description>
+
+	<properties>
+		<main.basedir>${project.parent.basedir}</main.basedir>
+	</properties>
+
+	<distributionManagement>
+		<!-- This is required to generate a site with valid links to module sub-sites -->
+		<site>
+			<id>${project.artifactId}-site</id>
+			<url>${basedir}/</url>
+		</site>
+	</distributionManagement>
+
+	<modules>
+		<module>proxy-office</module>
+		<module>proxy-odata</module>
+	</modules>
+</project>
