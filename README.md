@@ -122,6 +122,41 @@ String endpointUrl = fileService.getServiceEndpointUri();
 String sharepointUrl = endpointUrl.split("_api")[0];
 FileClient fileClient = mApplication.getFileClient(DiscoveryFragment.this.getActivity(), sharepointResourceId, sharepointUrl).get();
 
+Quick Start for Exchange mail, calendar and contact apps
+--------------------------------------------------------
+
+There are 2 apps in the samples folder that utilize the mail-calendar-contact sdk.
+The mail app is a simple app that retrieves emails from the user's drafts folder. The mail-calendar-contact app retrieves emails from the users drafts folder, sends email, retrieves events from the user's calendar and retrieves contacts from the user's contact list.
+
+The set up for both apps is given below.
+
+Download the following code onto your machine: mail-app from this app or the mail-calendar-contact-app, Azure Active directory Android library [AADAL] from the following repo https://github.com/MSOpenTech/azure-activedirectory-library-for-android
+
+Add a dependency on AADAL from the mail-app.
+
+Subscribe to a mail account from http://msdn.microsoft.com/en-us/library/fp179924(v=office.15).aspx or use an existing mail account.
+
+Modify the following in the constants.java file
+
+    public static final String DOMAIN = "Enter the domain for the user name"; // For example if the user name is foo@bar.com, then bar.com is the domain name.
+    
+    public static final String CLIENT_ID = "Grab this from the Azure management portal after you register your application";
+    
+    public static final String REDIRECT_URL = "Grab this from the Azure management portal after you register your application";
+
+If you hit a JAR Mismatch issue with the Android-Support-v4.jar, please replace this jar in the AADAL libs folder with the latest one from the Android SDK. 
+
+Run the application. User will be asked to enter his account details and all the mails from the drafts folder are retrieved.
+
+Note:
+
+Both the mail apps listed above already include a reference to the mail-calendar-contacts.jar file. 
+If you choose to build the SDK, please follow the steps listed in README.txt located in the root folder of the SDK to produce the JAR file.
+
+Execute “mvn clean install” to generate the jar file and set it up into local maven repository. Jar will be generated in “<sdk-root>\core\target\mail-calendar-contact-core-0.11.1.jar”
+
+
+
 License
 -------
 
