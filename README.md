@@ -143,6 +143,8 @@ Modify the following in the constants.java file
     public static final String CLIENT_ID = "Grab this from the Azure management portal after you register your application";
     
     public static final String REDIRECT_URL = "Grab this from the Azure management portal after you register your application";
+    
+    public static final String USER_HINT = "Enter your login here";// For example like foo@bar.com 
 
 If you hit a JAR Mismatch issue with the Android-Support-v4.jar, please replace this jar in the AADAL libs folder with the latest one from the Android SDK. 
 
@@ -150,7 +152,14 @@ Run the application. User will be asked to enter his account details and all the
 
 The code that calls the mail-contact-calendar-contacts-sdk from within the 2 apps is below:
 
+For the mail-app:Mainactivity.java, Method:readMessages
+For the mail-calendar-contacts-app:
 
+  samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/box/DraftsFragment.javaDraftsFragment.java, Method:Initlist and onContextItemSelected (for sending messages).
+
+  samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/box/EventsFragment.java, Method:Initlist
+
+  samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/box/ContactsFragment.java, Method:Initlist 
 
 Note:
 
@@ -159,6 +168,16 @@ If you choose to build the SDK, please follow the steps listed in README.txt loc
 
 Execute “mvn clean install” to generate the jar file and set it up into local maven repository. Jar will be generated in “<sdk-root>\core\target\mail-calendar-contact-core-0.11.1.jar”
 
+Features
+--------
+
+For the entire list of methods available in the SDK, please refer to the java docs under each SDK in the SDK folder.
+
+
+Tests
+-----
+
+Apart from the sample apps, we also have end to end tests that demonstrate the use of the SDK. Please look at the tests folder under the root of the SDK.
 
 
 License
