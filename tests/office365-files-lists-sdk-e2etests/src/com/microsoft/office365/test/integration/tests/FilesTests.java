@@ -22,8 +22,8 @@ public class FilesTests extends TestGroup {
 		this.addTest(canGetSpecificProperty("Get specific property from path"));
 		this.addTest(canGetSpecificPropertyFromLib("Get specific property from lib and path"));
 		this.addTest(canGetFileFromDefaultLib("Can get file from default lib"));
-		//TODO:Review
-		//this.addTest(canGetFileFromLibAndPath("Can get file from lib and path")); 
+		// TODO:Review
+		// this.addTest(canGetFileFromLibAndPath("Can get file from lib and path"));
 		this.addTest(canCreateFolderInDefaultDocLib("Can create folder in default doc lib"));
 		this.addTest(canCreateFolderInLibAndFolder("Can create folder inside lib"));
 		this.addTest(canCreateFilesInDefaultDocLib("Can create file in default doc lib"));
@@ -116,7 +116,7 @@ public class FilesTests extends TestGroup {
 					result.setTestCase(this);
 
 					FileClient client = ApplicationContext.getFileClient();
-					String lib = "TestDocLib";
+					String lib = ApplicationContext.getTestListName();
 					List<FileSystemItem> fileInfo = client.getFileSystemItems(
 							"", lib).get();
 					if (fileInfo == null) {
@@ -145,7 +145,7 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String someFile = UUID.randomUUID().toString() + ".foo";
-					String lib = "TestDocLib";
+					String lib = ApplicationContext.getTestListName();
 					FileSystemItem fileInfo = client.createFile(someFile, lib)
 							.get();
 					if (fileInfo == null) {
@@ -234,8 +234,10 @@ public class FilesTests extends TestGroup {
 					result.setTestCase(this);
 
 					FileClient client = ApplicationContext.getFileClient();
-					String lib = "TestDocLib";
-					String someFile = "SomeFolder\\"
+					String lib = ApplicationContext.getTestListName();
+					String folderName = UUID.randomUUID().toString();
+					client.createFolder(folderName).get();
+					String someFile = folderName + "\\"
 							+ UUID.randomUUID().toString() + ".fo1";
 					byte[] content = "some content"
 							.getBytes(Constants.UTF8_NAME);
@@ -271,7 +273,7 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String someFile = UUID.randomUUID().toString() + ".foo";
-					String path = "TestDocLib";
+					String path = ApplicationContext.getTestListName();
 					FileSystemItem fileInfo = client.createFile(someFile, path)
 							.get();
 					if (fileInfo == null) {
@@ -325,7 +327,7 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String someFolder = UUID.randomUUID().toString();
-					String docLib = "TestDocLib";
+					String docLib = ApplicationContext.getTestListName();
 					FileSystemItem folderInfo = client.createFolder(someFolder,
 							docLib).get();
 					if (folderInfo == null) {
@@ -414,7 +416,7 @@ public class FilesTests extends TestGroup {
 					result.setTestCase(this);
 
 					FileClient client = ApplicationContext.getFileClient();
-					String library = "TestDocLib";
+					String library = ApplicationContext.getTestListName();
 					String folder = UUID.randomUUID().toString();
 					client.createFolder(folder, library).get();
 
@@ -513,7 +515,7 @@ public class FilesTests extends TestGroup {
 
 					FileClient client = ApplicationContext.getFileClient();
 					String folderName = UUID.randomUUID().toString();
-					String docLib = "TestDocLib";
+					String docLib = ApplicationContext.getTestListName();
 					client.createFolder(folderName, docLib).get();
 
 					List<FileSystemItem> files = client.getFileSystemItems(
@@ -561,35 +563,35 @@ public class FilesTests extends TestGroup {
 		return test;
 	}
 
-//	private TestCase canGetFileFromLibAndPath(String name) {
-//		TestCase test = new TestCase() {
-//
-//			@Override
-//			public TestResult executeTest() {
-//				try {
-//					TestResult result = new TestResult();
-//					result.setStatus(TestStatus.Passed);
-//					result.setTestCase(this);
-//					String docLib = "TestDocLib";
-//					FileClient client = ApplicationContext.getFileClient();
-//					String folder = UUID.randomUUID().toString();
-//					client.createFolder(folder, docLib).get();
-//					String fileName = UUID.randomUUID().toString() + ".txt";
-//					String path = folder + "\\" + fileName;
-//
-//					client.createFile(path, docLib).get();
-//					byte[] file = client.getFile(path, docLib).get();
-//					if (file == null) {
-//						throw new Exception("Expected at least one file");
-//					}
-//
-//					return result;
-//				} catch (Exception e) {
-//					return createResultFromException(e);
-//				}
-//			}
-//		};
-//		test.setName(name);
-//		return test;
-//	}
+	// private TestCase canGetFileFromLibAndPath(String name) {
+	// TestCase test = new TestCase() {
+	//
+	// @Override
+	// public TestResult executeTest() {
+	// try {
+	// TestResult result = new TestResult();
+	// result.setStatus(TestStatus.Passed);
+	// result.setTestCase(this);
+	// String docLib = "TestDocLib";
+	// FileClient client = ApplicationContext.getFileClient();
+	// String folder = UUID.randomUUID().toString();
+	// client.createFolder(folder, docLib).get();
+	// String fileName = UUID.randomUUID().toString() + ".txt";
+	// String path = folder + "\\" + fileName;
+	//
+	// client.createFile(path, docLib).get();
+	// byte[] file = client.getFile(path, docLib).get();
+	// if (file == null) {
+	// throw new Exception("Expected at least one file");
+	// }
+	//
+	// return result;
+	// } catch (Exception e) {
+	// return createResultFromException(e);
+	// }
+	// }
+	// };
+	// test.setName(name);
+	// return test;
+	// }
 }
