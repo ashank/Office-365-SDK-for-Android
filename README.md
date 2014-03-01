@@ -148,6 +148,10 @@ If you hit a JAR Mismatch issue with the Android-Support-v4.jar, please replace 
 
 Run the application. User will be asked to enter his account details and all the mails from the drafts folder are retrieved.
 
+The code that calls the mail-contact-calendar-contacts-sdk from within the 2 apps is below:
+
+
+
 Note:
 
 Both the mail apps listed above already include a reference to the mail-calendar-contacts.jar file. 
