@@ -121,7 +121,7 @@ Add a dependency on ADAL from the mail-app.
 
 Subscribe to a mail account from [here](http://msdn.microsoft.com/en-us/library/fp179924(v=office.15).aspx) or use an existing mail account.
 
-Modify the following in the constants.java file. Please refer to [this](http://msdn.microsoft.com/en-us/library/dn605895(v=office.15).aspx) to understand how to obtain the values below.
+Modify the following in the ```Constants.java``` file. Please refer to [this](http://msdn.microsoft.com/en-us/library/dn605895(v=office.15).aspx) to understand how to obtain the values below.
 
 ```java
     // For example if the user name is foo@bar.com, then bar.com is the domain name.
