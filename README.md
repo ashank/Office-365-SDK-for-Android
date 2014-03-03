@@ -65,13 +65,13 @@ Note: The app has been tested on Android versions API 14 and 17 .
 ----------
 
 Download the following code onto your machine from this repo: office365-base-sdk, office365-files-sdk, files-discovery-app.
-Download the Azure Active directory Android library [AADAL] from the following [repo](https://github.com/MSOpenTech/azure-activedirectory-library-for-android).
+Download the Azure Active directory Android library [ADAL] from the following [repo](https://github.com/MSOpenTech/azure-activedirectory-library-for-android).
 
 Import the above code into your favorite IDE.
 
 Add a dependency on the office365-base-sdk from the office365-lists-sdk.
 Add a dependency on the office365-base-sdk from the office365-files-sdk.
-Add a dependency on the office365-files-sdk and AADAL the from the files demo app.
+Add a dependency on the office365-files-sdk and ADAL the from the files demo app.
 
 Subscribe to SharePoint online from [here](http://msdn.microsoft.com/en-us/library/fp179924(v=office.15).aspx) or use an existing SharePoint Online site.
 
@@ -113,9 +113,9 @@ There are 2 apps in the samples folder that utilize the mail-calendar-contact sd
 
 **The set up for both apps is given below.**
 
-Download the following code onto your machine: mail-app from this app or the mail-calendar-contact-app, Azure Active directory Android library [AADAL] from [here.](https://github.com/MSOpenTech/azure-activedirectory-library-for-android)
+Download the following code onto your machine: mail-app from this app or the mail-calendar-contact-app, Azure Active directory Android library [ADAL] from [here.](https://github.com/MSOpenTech/azure-activedirectory-library-for-android)
 
-Add a dependency on AADAL from the mail-app.
+Add a dependency on ADAL from the mail-app.
 
 Subscribe to a mail account from [here](http://msdn.microsoft.com/en-us/library/fp179924(v=office.15).aspx) or use an existing mail account.
 
@@ -132,7 +132,10 @@ Run the application. User will be asked to enter his account details and all the
 
 The code that calls the mail-contact-calendar-contacts-sdk from within the 2 apps is below:
 
-For the mail-app:Mainactivity.java, Method:readMessages.
+For the mail-app:
+
+    Mainactivity.java, Method:readMessages.
+
 For the mail-calendar-contacts-app:
     
     samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/box/DraftsFragment.javaDraftsFragment.java, Method:Initlist and onContextItemSelected (for sending messages).
