@@ -2,7 +2,7 @@ package com.microsoft.office365.demo;
 
 public class Constants {
 	// -------------------------------AAD PARAMETERS----------------------------------
-	public static final String AUTHORITY_URL = "https://login.windows-ppe.net/common/oauth2/token";
+	public static final String AUTHORITY_URL = "https://login.windows.net/common/oauth2/token";
 	public static final String CLIENT_ID = "your-client-id"; 
 	public static final String REDIRECT_URL = "http://your-redirect-url.com";
 	
