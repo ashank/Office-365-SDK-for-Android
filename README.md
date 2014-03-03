@@ -75,7 +75,7 @@ Add a dependency on the office365-files-sdk and AADAL the from the files demo ap
 
 Subscribe to SharePoint online from [here](http://msdn.microsoft.com/en-us/library/fp179924(v=office.15).aspx) or use an existing SharePoint Online site.
 
-Please edit the /file-discovery-app/src/com/microsoft/office365/file-discovery-app/Constants.java file and provide the values for the constants below.Please refer to [this](http://msdn.microsoft.com/en-us/library/dn605895(v=office.15).aspx) to understand how to obtain the values below.
+Please edit the /file-discovery-app/src/com/microsoft/office365/file-discovery-app/Constants.java file and provide the values for the constants below.Please refer to [this](http://msdn.microsoft.com/en-us/library/dn605895(v=office.15).aspx) to understand how to obtain the values below and set the right permissions for the app so that it can read files from sharepoint.
     
     public static final String CLIENT_ID = "your-client-id";
     public static final String REDIRECT_URL = "http://your-redirect-url.com";
