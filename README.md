@@ -44,9 +44,9 @@ Subscribe to SharePoint online from [here](http://msdn.microsoft.com/en-us/libra
 The application expects a picture library on the site with Title and Description columns visible in the default view of the library.
 Run the application. Click on the cog wheel at the top of the app on the first screen and you will see the second screen that has the list of settings that need to be configured. Examples are below.
 
-- SharePoint URL would be like “https://contosomotors.sharepoint.com
+- SharePoint URL would be like “https://foobar.sharepoint.com
 - Site URL would be like “sites/developers”
-- Library name would be something like “ContosomotorsPictureLibrary”
+- Library name would be something like “foobarPictureLibrary”
 - Please choose the Cookie authentication method under authentication method.
 
 That’s all the configuration for the app is done. You can go back to the first screen and click on the box next to the settings to retrieve the items in the picture library, add an item or update the title or description of an existing item.
