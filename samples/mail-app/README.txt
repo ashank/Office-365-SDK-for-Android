@@ -27,4 +27,5 @@ Usage
 ------ 
 1. Import to Eclipse via "General > Existing Project into Workspace".
 2. Resolve ADAL library dependency via "Properties > Android > Library section"
-3. Run on device/emulator with API < 4.4
+3. Add android-support-v4 library to the 'libs' folder and add to build path. You can take it from Android SDK: "<SDK-root>/extras/android/support/v4/"
+4. Run on device/emulator with API < 4.4

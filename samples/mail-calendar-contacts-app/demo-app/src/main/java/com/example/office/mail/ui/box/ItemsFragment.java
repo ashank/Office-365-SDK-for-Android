@@ -143,7 +143,7 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
      *
      * @return Box for this fragment, or <code>null</code> in case of error.
      */
-    protected abstract UI.Screen getBox();
+    protected abstract UI.Screen getScreen();
 
     @Override
     protected List<MailItem> getListData() {
@@ -154,7 +154,7 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
                 List<MailItem> mails = config.getMails();
                 isValidList = mails != null && !mails.isEmpty();
                 if (isValidList) {
-                    return Utils.boxMail(mails, getBox());
+                    return Utils.boxMail(mails, getScreen());
                 }
             }
         } catch (Exception e) {
@@ -209,7 +209,7 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
      */
     protected void updateList(List<MailItem> items) {
         try {
-            getListAdapterInstance().update(Utils.boxMail(items, getBox()));
+            getListAdapterInstance().update(Utils.boxMail(items, getScreen()));
 
             View rootView = getView();
             if (rootView != null) {
@@ -267,6 +267,12 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
                 return super.onContextItemSelected(item);
         }
     }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().getActionBar().setLogo(getScreen().getIcon(getActivity()));
+    }
 
     /**
      * Creates and returns an instance of authenticator used to get access to endpoint.
@@ -289,8 +295,16 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
                 super.onDone(result);
                 AuthPreferences.storeCredentials(getCredentials().setToken(result));
             }
+            
+            @Override
+            public void onError(Throwable error) {
+                super.onError(error);
+                ItemsFragment.this.onError(error);
+            }
         };
     }
+    
+    public abstract void onError(Throwable t);
     
     /**
      * Returns TEST or RELEASE version of end point to retrieve list of emails in the inbox depending on {@link Configuration#DEBUG}
@@ -299,7 +313,7 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
      * @return URL to retrieve list of emails in the inbox.
      */
     private String getEndpoint() {
-        return Constants.MAIL_MESSAGES_TEST;
+        return Constants.OUTLOOK_ODATA_ENDPOINT;
     }
     
     /**
@@ -319,6 +333,14 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
     
         mOfficeAuthenticator = getAuthenticator();
         com.microsoft.office.core.Configuration.setAuthenticator(mOfficeAuthenticator);
+    }
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mOfficeAuthenticator != null) {
+            mOfficeAuthenticator.onActivityResult(requestCode, resultCode, data);
+        }
     }
     
 }

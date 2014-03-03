@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
-import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -39,7 +38,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.ShareActionProvider;
 
 import com.example.office.Constants.UI;
 import com.example.office.Constants.UI.Screen;
@@ -48,9 +46,9 @@ import com.example.office.OfficeApplication;
 import com.example.office.R;
 import com.example.office.adapters.SlidingDrawerAdapter;
 import com.example.office.logger.Logger;
-import com.example.office.mail.ui.box.EventsFragment;
-import com.example.office.mail.ui.box.DraftsFragment;
+import com.example.office.mail.ui.box.CalendarFragment;
 import com.example.office.mail.ui.box.ContactsFragment;
+import com.example.office.mail.ui.box.DraftsFragment;
 
 /**
  * Activity that common application UI logic related to Action Bar, Sliding Drawer and Fragments providing main content.
@@ -124,8 +122,8 @@ public class Office365DemoActivity extends BaseActivity implements SearchView.On
                 .setTabListener(new TabListener<DraftsFragment>(this, UI.Screen.MAILBOX.getName(this), DraftsFragment.class));
         actionBar.addTab(tab, true);
 
-        tab = actionBar.newTab().setText(UI.Screen.EVENTS.getName(this)).setTag(UI.Screen.EVENTS.getName(this))
-                .setTabListener(new TabListener<EventsFragment>(this, UI.Screen.EVENTS.getName(this), EventsFragment.class));
+        tab = actionBar.newTab().setText(UI.Screen.CALENDAR.getName(this)).setTag(UI.Screen.CALENDAR.getName(this))
+                .setTabListener(new TabListener<CalendarFragment>(this, UI.Screen.CALENDAR.getName(this), CalendarFragment.class));
         actionBar.addTab(tab);
 
         // Setting up sliding drawer.
@@ -187,12 +185,6 @@ public class Office365DemoActivity extends BaseActivity implements SearchView.On
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        // This activity is 'singleTop' so all 'reopenings' should be handled here.
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(STATE_FRAGMENT_TAG, mCurrentFragmentTag);
@@ -205,10 +197,6 @@ public class Office365DemoActivity extends BaseActivity implements SearchView.On
         MenuItem searchItem = menu.findItem(R.id.inbox_menu_search);
         mSearchView = (SearchView) searchItem.getActionView();
         mSearchView.setOnQueryTextListener(this);
-
-        MenuItem shareItem = menu.findItem(R.id.inbox_menu_share);
-        ShareActionProvider shareActionProvider = (ShareActionProvider) shareItem.getActionProvider();
-        shareActionProvider.setShareIntent(getShareIntent());
 
         searchItem.setOnActionExpandListener(new OnActionExpandListener() {
             @Override
@@ -225,12 +213,6 @@ public class Office365DemoActivity extends BaseActivity implements SearchView.On
         return true;
     }
 
-    private Intent getShareIntent() {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("message/rfc822");
-        return intent;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
@@ -243,9 +225,7 @@ public class Office365DemoActivity extends BaseActivity implements SearchView.On
                 mSearchView.setIconified(false);
                 return true;
             }
-            case R.id.inbox_menu_settings: {
-                return false;
-            }
+            
             default: {
                 return super.onOptionsItemSelected(item);
             }
@@ -302,8 +282,8 @@ public class Office365DemoActivity extends BaseActivity implements SearchView.On
                         case MAILBOX:
                             newFragment = new DraftsFragment();
                             break;
-                        case EVENTS: {
-                            newFragment = new EventsFragment();
+                        case CALENDAR: {
+                            newFragment = new CalendarFragment();
                             break;
                         }
                         default: {

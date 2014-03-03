@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.view.View;
@@ -68,7 +67,7 @@ public class DraftsFragment extends ItemsFragment implements IOperationCallback<
     }
 
     @Override
-    protected UI.Screen getBox() {
+    protected UI.Screen getScreen() {
         return UI.Screen.MAILBOX;
     }
     
@@ -178,13 +177,5 @@ public class DraftsFragment extends ItemsFragment implements IOperationCallback<
                 getActivity().findViewById(R.id.mail_failure_retrieving_message).setVisibility(View.VISIBLE);
             }
         });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (mOfficeAuthenticator != null) {
-            mOfficeAuthenticator.onActivityResult(requestCode, resultCode, data);
-        }
     }
 }

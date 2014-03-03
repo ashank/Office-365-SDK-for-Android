@@ -17,7 +17,7 @@
  * See the Apache License, Version 2.0 for the specific language
  * governing permissions and limitations under the License.
  */
-package com.example.exchangesample;
+package com.example.office365sample;
 
 import com.microsoft.office.core.auth.OfficeCredentialsImpl;
 

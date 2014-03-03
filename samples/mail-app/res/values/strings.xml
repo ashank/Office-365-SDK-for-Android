@@ -22,9 +22,8 @@
 -->
 <resources>
 
-    <string name="app_name">Exchange Sample</string>
+    <string name="app_name">Office365 Simple Sample</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello Exchange!</string>
     <string name="main_note">Check LogCat output for the list of emails.</string>
 
 </resources>

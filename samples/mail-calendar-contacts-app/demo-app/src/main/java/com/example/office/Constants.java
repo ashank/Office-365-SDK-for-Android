@@ -34,9 +34,35 @@ import android.text.TextUtils;
 public class Constants {
 
     /**
+     * Url for Oauth2 authorization page.
+     */
+    public static final String AUTHORITY_URL = "https://login.windows.net/common/oauth2/token";
+
+    /**
+     * Application unique ID for Oauth2 authorization.
+     * E.g.: da234996-bb7c-235f4-a034-bdecba123cb6
+     */
+    public static final String CLIENT_ID = "Enter your client ID here";
+
+    /**
+     * Resource id for authorization and where need get access.
+     */
+    public static final String RESOURCE_ID = "https://outlook.office365.com/";
+
+    /**
      * TEST Endpoint to retrieve list current messages from the inbox.
      */
-    public static final String MAIL_MESSAGES_TEST = "https://outlook.office365.com/ews/odata";
+    public static final String OUTLOOK_ODATA_ENDPOINT = RESOURCE_ID + "/ews/odata";
+
+    /**
+     * Url application will be redirected after authentication.
+     */
+    public static final String REDIRECT_URL = "Enter your redirect URL here";
+
+    /**
+     * User name hint in authentication form.
+     */
+    public static final String USER_HINT = "Enter your login here";
 
     /**
      * Application logging TAG.
@@ -49,30 +75,6 @@ public class Constants {
      * 2. {@link Configuration#EMULATE_SIM_PRESENT} is set to <code>true</code>.
      */
     public static final String MOCK_SIM = "12345678910";
-
-    /**
-     * Url for Oauth2 authorization page.
-     */
-    public static final String AUTHORITY_URL = "https://login.windows-ppe.net/p365ppetap04.ccsctp.net";
-
-    /**
-     * Application unique ID for Oauth2 authorization.
-     */
-    public static final String CLIENT_ID = "a7558c9a-c964-4fbf-be19-2f277f78a586";
-
-    /**
-     * Resource id for authorization and where need get access.
-     */
-    public static final String RESOURCE_ID = "https://outlook.office365.com/";
-    /**
-     * Url application will be redirected after authentication.
-     */
-    public static final String REDIRECT_URL = "http://msopentech.com";
-    
-    /**
-     * User name hint in authentication form.
-     */
-    public static final String USER_HINT = "Enter your login here";
 
     /**
      * Holds enumerations and constants related to application UI
@@ -102,9 +104,9 @@ public class Constants {
          * Splits all application screens in defined groups based on it's functionality.
          */
         public static enum ScreenGroup implements IScreenGroup {
-            MAIL, // 'Box screens' that can contain email messages
+            MAIL,
             DRAWER, // References to screens that can be accessed via left sliding drawer.
-            CONTACTS, EVENTS;
+            CONTACTS, CALENDAR;
 
             /**
              * List of members of this group. It is initialized statically.
@@ -152,7 +154,7 @@ public class Constants {
         public enum Screen {
             CONTACTS(R.string.screens_contacts, R.drawable.ic_contact, ScreenGroup.CONTACTS, ScreenGroup.MAIL, ScreenGroup.DRAWER),
             MAILBOX(R.string.screens_mailbox, R.drawable.mailbox, ScreenGroup.MAIL, ScreenGroup.DRAWER),
-            EVENTS(R.string.screens_events, android.R.drawable.ic_menu_today, ScreenGroup.EVENTS, ScreenGroup.MAIL, ScreenGroup.DRAWER),
+            CALENDAR(R.string.screens_calendar, android.R.drawable.ic_menu_today, ScreenGroup.CALENDAR, ScreenGroup.MAIL, ScreenGroup.DRAWER),
             HELP(R.string.screens_help, R.drawable.help, ScreenGroup.DRAWER);
 
             /**

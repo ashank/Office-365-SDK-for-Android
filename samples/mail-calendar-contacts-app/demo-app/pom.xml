@@ -24,14 +24,14 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
           
     <parent>
-		<groupId>com.example.office.android.exchange</groupId>
-		<artifactId>demo</artifactId>
+		<groupId>com.example.office365.android</groupId>
+		<artifactId>mail-calendar-contact-demo</artifactId>
 		<version>0.5.0</version>
     </parent>
     
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.example.office.android.exchange</groupId>
-    <artifactId>demo-app</artifactId>
+    <groupId>com.example.office365.android</groupId>
+    <artifactId>mail-calendar-contact-demo-app</artifactId>
     <packaging>apk</packaging>
     <name>Office 365 Demo: Android Application</name>
 
@@ -49,23 +49,14 @@
             </dependency>
 			
         <dependency>
-            <groupId>com.msopentech.office365.exchange</groupId>
-            <artifactId>exchange-core</artifactId>
+            <groupId>com.microsoft.office365</groupId>
+            <artifactId>mail-calendar-contact-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.microsoft.adal</groupId>
             <artifactId>adal</artifactId>
             <type>aar</type>
         </dependency>	
-
-        <dependency>
-            <groupId>jcifs</groupId>
-            <artifactId>jcifs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.nineoldandroids</groupId>
-            <artifactId>library</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.squareup</groupId>
             <artifactId>otto</artifactId>

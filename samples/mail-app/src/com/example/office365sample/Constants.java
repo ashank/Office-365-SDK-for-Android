@@ -17,7 +17,7 @@
  * See the Apache License, Version 2.0 for the specific language
  * governing permissions and limitations under the License.
  */
-package com.example.exchangesample;
+package com.example.office365sample;
 
 /**
  * Stores application public constants such as URLs to update configurations, default check back-in values, etc.
@@ -25,28 +25,29 @@ package com.example.exchangesample;
 public class Constants {
 
     /**
-     * Domain.
+     * Login.
+     * Example: name@company.onmicrosoft.com
      */
-    public static final String DOMAIN = "Enter your domain here";
+    public static final String USER_HINT = "Enter your login here";
     
    /**
      * Url for Oauth2 authorization page.
      */
-    public static final String AUTHORITY_URL = "https://login.windows-ppe.net/" + DOMAIN;
-    
+    public static final String AUTHORITY_URL = "https://login.windows.net/common/oauth2/token";
 
     /**
      * Application unique ID for Oauth2 authorization.
      */
-    public static final String CLIENT_ID = "a7558c9a-c964-4fbf-be19-2f277f78a586";
+    public static final String CLIENT_ID = "Enter your client ID here";
 
     /**
-     * Resource id for authorization and where need get access.
+     * Resource id - URL of the resource we will work with.
      */
     public static final String RESOURCE_ID = "https://outlook.office365.com/";
+
     /**
      * Url application will be redirected after authentication.
      */
-    public static final String REDIRECT_URL = "http://msopentech.com";
+    public static final String REDIRECT_URL = "Enter your redirect URL here";
 
 }

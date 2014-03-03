@@ -17,13 +17,10 @@
  * See the Apache License, Version 2.0 for the specific language
  * governing permissions and limitations under the License.
  */
-package com.example.exchangesample;
+package com.example.office365sample;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.msopentech.org.apache.http.client.HttpClient;
-import com.msopentech.org.apache.http.client.methods.HttpUriRequest;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -46,6 +43,8 @@ import com.microsoft.exchange.services.odata.model.types.IFolder;
 import com.microsoft.exchange.services.odata.model.types.IMessage;
 import com.microsoft.office.core.auth.method.IAuthenticator;
 import com.microsoft.office.core.net.NetworkException;
+import com.msopentech.org.apache.http.client.HttpClient;
+import com.msopentech.org.apache.http.client.methods.HttpUriRequest;
 
 public class MainActivity extends ListActivity {
 
@@ -62,7 +61,7 @@ public class MainActivity extends ListActivity {
         getListView().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {"Loading..."}));
 
         mCredentials = new OfficeCredentials(Constants.AUTHORITY_URL, Constants.CLIENT_ID, Constants.RESOURCE_ID, Constants.REDIRECT_URL);
-        mCredentials.setUserHint("Enter your login here");
+        mCredentials.setUserHint(Constants.USER_HINT);
 
             try {
                 mAuthContext = new AuthenticationContext(this, mCredentials.getAuthorityUrl(), false);
@@ -89,13 +88,13 @@ public class MainActivity extends ListActivity {
 
                             @Override
                             public void onError(Exception exc) {
-                                Log.i("exchangesample ", "error1");
+                                Log.i("office365simpledemo", "error1");
                                 getListView().setAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1,
-                                        new String[] {"Error during authentication:", exc.getMessage()}));
+                                        new String[] {"Error during authentication:", exc.getMessage() == null ? "<null>" : exc.getMessage()}));
                             }
                         });
             } catch (Exception exc) {
-                Log.i("exchangesample ", "error2");
+                Log.i("office365simpledemo", "error2");
                 getListView().setAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1,
                         new String[] {"Error during authentication:", exc.getMessage()}));
             }
@@ -117,7 +116,7 @@ public class MainActivity extends ListActivity {
                     
                     updateList(messages);
                 } catch (final Exception e) {
-                    Log.d("exchangesample", "error3");
+                    Log.d("office365simpledemo", "error3");
                     getListView().setAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1,
                             new String[] {"Error during messages retrieving:", e.getMessage()}));
                 }
@@ -150,7 +149,7 @@ public class MainActivity extends ListActivity {
 
                     setListAdapter(adapter);
                 } catch (Exception e) {
-                    Log.e("exchangesample", "error", e);
+                    Log.e("office365simpledemo", "error", e);
                 }
             }
         });

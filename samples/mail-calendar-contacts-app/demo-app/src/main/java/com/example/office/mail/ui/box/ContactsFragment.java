@@ -52,7 +52,7 @@ public class ContactsFragment extends ItemsFragment {
     private boolean isInitializing = false;
     
     @Override
-    protected UI.Screen getBox() {
+    protected UI.Screen getScreen() {
         return UI.Screen.CONTACTS;
     }
 
@@ -163,8 +163,8 @@ public class ContactsFragment extends ItemsFragment {
      * 
      * @param e an exception occured.
      */
-    public void onError(final Exception e) {
-        Logger.logApplicationException(e, getClass().getSimpleName() + ".onExecutionComplete(): Error.");
+    public void onError(final Throwable e) {
+        Logger.logApplicationException(new Exception(e), getClass().getSimpleName() + ".onExecutionComplete(): Error.");
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 showWorkInProgress(false, false);
