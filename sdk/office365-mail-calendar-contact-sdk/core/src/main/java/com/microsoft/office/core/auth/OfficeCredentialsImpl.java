@@ -34,7 +34,7 @@ public class OfficeCredentialsImpl implements IOfficeCredentials, Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * SharePoint authority url. E.g. "https://login.windows-ppe.net/p365ppetap04.ccsctp.net".
+     * SharePoint authority url. E.g. "https://login.windows.net/common/oauth2/token".
      */
     private String mAuthorityUrl = "";
 
@@ -73,7 +73,7 @@ public class OfficeCredentialsImpl implements IOfficeCredentials, Serializable {
     /**
      * Instantiates and validates credentials.
      *
-     * @param authorityUrl SharePoint authority url. E.g. "https://login.windows-ppe.net/p365ppetap04.ccsctp.net".
+     * @param authorityUrl SharePoint authority url. E.g. "https://login.windows.net/common/oauth2/token".
      * @param clientId SharePoint application unique ID. E.g. "60188dfc-3250-44c5-8434-8f106c9e529e".
      * @param resourceId SharePoint resource unique ID. E.g. "https://outlook.office365.com/".
      * @param redirectUrl Url application will be redirected after authentication. Should be SSL secure. "https://www.domain.com/redirect".

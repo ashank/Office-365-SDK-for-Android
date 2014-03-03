@@ -30,7 +30,7 @@
   <name>Microsoft Office 365 Mail-Calendar-Contact SDK for Java</name>
   <description>Java SDK for Office 365 Mail-Calendar-Contact services</description>
 
-  <url>https://msopentech.visualstudio.com/DefaultCollection/Office 365 SDK for Android - Demo/_git/Office 365 Java SDK</url>
+  <url>https://github.com/OfficeDev/Office-365-SDK-for-Android</url>
 
   <inceptionYear>2014</inceptionYear>
 
@@ -56,8 +56,9 @@
   </developers>
 
   <scm>
-    <url>https://msopentech.visualstudio.com/DefaultCollection/Office 365 SDK for Android - Demo/_git/Office 365 Java SDK</url>
-    <!-- TODO: fill in connection and developerConnection -->
+    <url>https://github.com/OfficeDev/Office-365-SDK-for-Android.git</url>
+    <connection>scm:git:git@github.com:OfficeDev/Office-365-SDK-for-Android.git</connection>
+    <developerConnection>scm:git:git@github.com:OfficeDev/Office-365-SDK-for-Android.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
