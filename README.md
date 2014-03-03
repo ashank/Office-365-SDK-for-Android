@@ -109,11 +109,13 @@ Step 6: Now the app is set to call the service using the service URL and the tok
 
 ## Quick Start for Exchange mail, calendar and contact apps ##
 
-There are 2 apps in the samples folder that utilize the mail-calendar-contact sdk. The mail app is a simple app that retrieves emails from the user's drafts folder. The mail-calendar-contact app retrieves emails from the users drafts folder, sends email, retrieves events from the user's calendar and retrieves contacts from the user's contact list.
+There are 2 apps in the samples folder that utilize the mail-calendar-contact sdk. 
+* The mail app is a simple app that retrieves emails from the user's drafts folder. 
+* The mail-calendar-contact app retrieves emails from the users drafts folder, sends email, retrieves events from the user's calendar and retrieves contacts from the user's contact list.
 
 **The set up for both apps is given below.**
 
-Download the following code onto your machine: mail-app from this app or the mail-calendar-contact-app, Azure Active directory Android library [ADAL] from [here.](https://github.com/MSOpenTech/azure-activedirectory-library-for-android)
+Download the following code onto your machine: mail-app from this app or the mail-calendar-contact-app, Azure Active directory Android library [ADAL] from [here](https://github.com/MSOpenTech/azure-activedirectory-library-for-android).
 
 Add a dependency on ADAL from the mail-app.
 
@@ -121,34 +123,42 @@ Subscribe to a mail account from [here](http://msdn.microsoft.com/en-us/library/
 
 Modify the following in the constants.java file. Please refer to [this](http://msdn.microsoft.com/en-us/library/dn605895(v=office.15).aspx) to understand how to obtain the values below.
 
-    public static final String DOMAIN = "Enter the domain for the user name"; // For example if the user name is foo@bar.com, then bar.com is the domain name.
-    public static final String CLIENT_ID = "Grab this from the Azure management portal after you register your application";
-    public static final String REDIRECT_URL = "Grab this from the Azure management portal after you register your application";
-    public static final String USER_HINT = "Enter your login here";// For example like foo@bar.com 
-
-If you hit a JAR Mismatch issue with the Android-Support-v4.jar, please replace this jar in the AADAL libs folder with the latest one from the Android SDK.
+```java
+    // For example if the user name is foo@bar.com, then bar.com is the domain name.
+    String DOMAIN = "Enter the domain for the user name"; 
+    // For example "b1392c0b-a846-2ffb-eb20-1a982f58b936".
+    String CLIENT_ID = "Grab this from the Azure management portal after you register your application";
+    // For example http://bar.com 
+    String REDIRECT_URL = "Grab this from the Azure management portal after you register your application";
+    // For example like foo@bar.com 
+    String USER_HINT = "Enter your login here";
+```
+If you hit a JAR Mismatch issue with the ```android-support-v4.jar```, please replace this jar in the AADAL libs folder with the latest one from the Android SDK ```<SDK-root>/extras/android/support/v4/```.
 
 Run the application. User will be asked to enter his account details and all the mails from the drafts folder are retrieved.
 
-The code that calls the mail-contact-calendar-contacts-sdk from within the 2 apps is below:
+You can also build mail-calendar-contact app using **Maven** with a single step: 
+* execute ```mvn clean install``` in the [root folder](https://github.com/OfficeDev/Office-365-SDK-for-Android/tree/master/samples/mail-calendar-contacts-app) of the demo application.
+
+**The code that calls the mail-contact-calendar-contacts-sdk from within the 2 apps is below:**
 
 For the mail-app:
 
-    Mainactivity.java, Method:readMessages.
+* [MainActivity.onCreate()](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/mail-app/src/com/example/office365sample/MainActivity.java#L59) to set up service endpoint and authentication.
+* [MainActivity.readMessages](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/mail-app/src/com/example/office365sample/MainActivity.java#L108) to retrieve list of emails from "Drafts" folder.
 
 For the mail-calendar-contacts-app:
     
-    samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/box/DraftsFragment.javaDraftsFragment.java, Method:Initlist and onContextItemSelected (for sending messages).
-     
-    samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/box/EventsFragment.java, Method:Initlist
-    
-    samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/box/ContactsFragment.java, Method:Initlist
+* [DraftsFragment.initList()](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/box/DraftsFragment.java#L104) to retrieve messages from "Drafts" folder.
+* [CalendarFragment.initList()](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/box/CalendarFragment.java#L90) to retrieve events from calendar.
+* [ContactsFragment.initList()](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/box/ContactsFragment.java#L90) to retrieve list of contacts .
+* [MailItemActivity](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/mail-calendar-contacts-app/demo-app/src/main/java/com/example/office/mail/ui/MailItemActivity.java#L52) for sending messages.
 
 Note:
 
-Both the mail apps listed above already include a reference to the mail-calendar-contacts.jar file. If you choose to build the SDK, please follow the steps listed in README.txt located in the root folder of the SDK to produce the JAR file.
+Both the mail apps listed above already include a reference to the ```mail-calendar-contacts.jar``` file. If you choose to build the SDK, please follow the steps listed in [README.txt](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/sdk/office365-mail-calendar-contact-sdk/README.txt) located in the root folder of the SDK to produce the JAR file.
 
-Execute “mvn clean install” to generate the jar file and set it up into local maven repository. Jar will be generated in “\core\target\mail-calendar-contact-core-0.11.1.jar”
+Execute ```mvn clean install``` to generate the jar file and set it up into local maven repository. Jar will be generated in ```\core\target\mail-calendar-contact-core-0.11.1.jar```
 
 ## Features ##
 For the entire list of methods available in the SDK, please refer to the java docs under each SDK in the SDK folder.
