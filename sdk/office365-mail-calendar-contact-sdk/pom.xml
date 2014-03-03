@@ -248,7 +248,7 @@
 			    	<include>org.slf4j:slf4j-api</include>
 			    </includes>
  				<excludes>
- 				    <exclude>com.msopentech.office365.exchange:exchange-maven-plugin</exclude>
+ 				    <exclude>com.microsoft.office365:mail-calendar-contact-maven-plugin</exclude>
 				</excludes>
 			</artifactSet>
 		  </configuration>

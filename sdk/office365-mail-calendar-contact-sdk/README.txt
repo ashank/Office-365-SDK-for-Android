@@ -63,7 +63,7 @@ Working in Eclipse:
 Testing:
 --------
 
- >> mvn --Pe2eTests
+ >> mvn -Pe2eTests
 
  Mind that you'll need to install artifacts into your local repository first before running the tests. See [Installation] section.
 
