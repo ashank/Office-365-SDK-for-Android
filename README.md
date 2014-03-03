@@ -115,7 +115,9 @@ There are 2 apps in the samples folder that utilize the mail-calendar-contact sd
 
 **The set up for both apps is given below.**
 
-Download the following code onto your machine: mail-app from this app or the mail-calendar-contact-app, Azure Active directory Android library [ADAL] from [here](https://github.com/MSOpenTech/azure-activedirectory-library-for-android).
+Download the following code onto your machine: 
+- [mail-app](https://github.com/OfficeDev/Office-365-SDK-for-Android/tree/master/samples/mail-app) or the [mail-calendar-contact-app](https://github.com/OfficeDev/Office-365-SDK-for-Android/tree/master/samples/mail-calendar-contacts-app)
+- [Azure Active Directory Android library](https://github.com/MSOpenTech/azure-activedirectory-library-for-android) (AADAL).
 
 Add a dependency on ADAL from the mail-app.
 
