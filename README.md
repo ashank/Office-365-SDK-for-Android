@@ -49,7 +49,7 @@ Run the application. Click on the cog wheel at the top of the app on the first s
 - Library name would be something like “foobarPictureLibrary”
 - Please choose the Cookie authentication method under authentication method.
 
-That’s all the configuration for the app is done. You can go back to the first screen and click on the box next to the settings to retrieve the items in the picture library, add an item or update the title or description of an existing item.
+The configuration for the app is done. You can go back to the first screen and click on the box next to the settings to retrieve the items in the picture library, add an item or update the title or description of an existing item.
 
 All the code that calls into the lists SDK is in the /assetmanagement/src/com/microsoft/assetmanagement/datasource/ListItemsDataSource.java class
 
