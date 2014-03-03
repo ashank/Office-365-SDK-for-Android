@@ -121,6 +121,8 @@ Download the following code onto your machine:
 
 Add a dependency on ADAL from the mail-app.
 
+Download [Otto library](http://square.github.io/otto/), put it in the 'libs' folder and add to build path.
+
 Subscribe to a mail account from [here](http://msdn.microsoft.com/en-us/library/fp179924(v=office.15).aspx) or use an existing mail account.
 
 Modify the following in the ```Constants.java``` file. Please refer to [this](http://msdn.microsoft.com/en-us/library/dn605895(v=office.15).aspx) to understand how to obtain the values below.
