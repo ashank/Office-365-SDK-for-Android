@@ -22,9 +22,8 @@
 -->
 <resources>
 
-    <string name="app_name">Hello Maven</string>
-    <string name="hello">Hello my-android-project!</string>
+    <string name="app_name">Integration Tests App</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="status">Setting up tests...</string>
 
 </resources>

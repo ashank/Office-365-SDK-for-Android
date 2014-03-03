@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.foo.bar</groupId>
-	<artifactId>my-android-project-it</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<groupId>com.microsoft.office.integration</groupId>
+	<artifactId>office365-tests-e2e-it</artifactId>
+	<version>1.0</version>
 	<packaging>apk</packaging>
-	<name>my-android-project-it - Integration tests</name>
+	<name>Microsoft Office 365 Mail-Calendar-Contact SDK for Java: Tests</name>
 
 	<properties>
 		<platform.version> 4.1.1.4</platform.version>
@@ -22,17 +22,17 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.foo.bar</groupId>
-			<artifactId>my-android-project</artifactId>
+			<groupId>com.microsoft.office.integration</groupId>
+			<artifactId>office365-tests-e2e</artifactId>
 			<type>apk</type>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.foo.bar</groupId>
-			<artifactId>my-android-project</artifactId>
+			<groupId>com.microsoft.office.integration</groupId>
+			<artifactId>office365-tests-e2e</artifactId>
 			<type>jar</type>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

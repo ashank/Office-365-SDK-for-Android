@@ -38,10 +38,10 @@ import com.msopentech.odatajclient.proxy.api.AsyncCall;
 
 public class TestActivity extends Activity {
 
-    public static final String AUTHORITY_URL = "https://login.windows-ppe.net/p365ppetap04.ccsctp.net";
-    public static final String CLIENT_ID = "a7558c9a-c964-4fbf-be19-2f277f78a586";
+    public static final String AUTHORITY_URL = "https://login.windows.net/common/oauth2/token";
+    public static final String CLIENT_ID = "Enter your resource ID here";
     public static final String RESOURCE_ID = "https://outlook.office365.com/";
-    public static final String REDIRECT_URL = "http://msopentech.com";
+    public static final String REDIRECT_URL = "Enter your redirect URL here";
 
     /**
      * Oauth2 office authenticator.
@@ -54,7 +54,7 @@ public class TestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        com.microsoft.office.core.Configuration.setServerBaseUrl("https://outlook.office365.com/ews/OData");
+        com.microsoft.office.core.Configuration.setServerBaseUrl(RESOURCE_ID + "ews/OData");
 
         mOfficeAuthenticator = new AbstractOfficeAuthenticator() {
             @Override
