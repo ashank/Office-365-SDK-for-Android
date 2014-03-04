@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -77,8 +78,6 @@ public class MetadataMojo extends AbstractMetadataMojo {
         return ODataVersion.V4.name().toLowerCase();
     }
 
-    private static String AUTH_HEADER = "Basic b2RhdGExQENUU1Rlc3QuY2NzY3RwLm5ldDowN0FwcGxlcw==";
-    
     private boolean generateInterfaces, generateClasses;
 
     @Override
@@ -100,7 +99,9 @@ public class MetadataMojo extends AbstractMetadataMojo {
             final ODataMetadataRequest req = client.
                     getRetrieveRequestFactory().getMetadataRequest(serviceRootURL);
 
-            req.addCustomHeader("Authorization", AUTH_HEADER);
+            final String authHeader = "Basic " + Base64.encodeBase64String((serviceUsername  + ":" + servicePassword).getBytes());
+            
+            req.addCustomHeader("Authorization", authHeader);
             
             final ODataRetrieveResponse<EdmV4Metadata> res = req.execute();
             final EdmV4Metadata metadata = res.getBody();

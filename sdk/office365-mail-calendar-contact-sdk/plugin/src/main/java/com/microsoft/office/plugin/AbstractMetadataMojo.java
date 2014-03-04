@@ -60,6 +60,14 @@ public abstract class AbstractMetadataMojo extends AbstractMojo {
      */
     @Parameter(property = "serviceRootURL", required = true)
     protected String serviceRootURL;
+    
+    /** Service authorization username. */
+    @Parameter(property = "serviceUsername", required = true)
+    protected String serviceUsername;
+    
+    /** Service authorization password. */
+    @Parameter(property = "servicePassword", required = true)
+    protected String servicePassword;
 
     /**
      * Base package.

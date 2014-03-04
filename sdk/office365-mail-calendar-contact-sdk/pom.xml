@@ -83,11 +83,14 @@
 
     <serviceRootURL>https://outlook.office365.com/ews/odata</serviceRootURL>
     
+    <serviceUsername>Enter your username here</serviceUsername>
+    <servicePassword>Enter your password here</servicePassword>
+
     <odatajclient.version>0.10.2-SNAPSHOT</odatajclient.version>
 
     <skip.tests>true</skip.tests>
     
-    </properties>
+  </properties>
 
   <dependencyManagement>
     <dependencies>
