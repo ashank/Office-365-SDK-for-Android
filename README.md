@@ -164,6 +164,22 @@ Both the mail apps listed above already include a reference to the ```mail-calen
 
 Execute ```mvn clean install``` to generate the jar file and set it up into local maven repository. Jar will be generated in ```\core\target\mail-calendar-contact-core-0.11.1.jar```
 
+## Building Mail-Calendar-Contact SDK from Sources ##
+
+Mail-Calendar-Contact SDK is using code generation to create object model for Office365 service based on metadata. 
+- It connects to the [endpoint](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/sdk/office365-mail-calendar-contact-sdk/pom.xml#L84) that should be provided in pom.xml. 
+- Accessing metadata requires authentication so [login](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/sdk/office365-mail-calendar-contact-sdk/pom.xml#L84) and [password](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/sdk/office365-mail-calendar-contact-sdk/pom.xml#L87) should also be provided to build the SDK.
+
+```xml
+    <serviceRootURL>https://outlook.office365.com/ews/odata</serviceRootURL>
+    <serviceUsername>Enter your username here</serviceUsername>
+    <servicePassword>Enter your password here</servicePassword>
+```
+
+All this configuration is made in the [parent pom](https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/sdk/office365-mail-calendar-contact-sdk/pom.xml) so you don't need to dig into subprojects.
+
+If service endpoint and authentication credentials are provided execute ```mvn clean install``` in the root folder of the SDK to build it.
+
 ## Features ##
 For the entire list of methods available in the SDK, please refer to the java docs under each SDK in the SDK folder.
 
