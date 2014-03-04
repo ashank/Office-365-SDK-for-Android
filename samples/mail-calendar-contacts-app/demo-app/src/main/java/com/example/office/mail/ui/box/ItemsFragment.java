@@ -26,10 +26,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -236,15 +233,6 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {              
-        super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId() == getListViewId()) {
-            MenuInflater inflater = getActivity().getMenuInflater();
-            inflater.inflate(R.menu.mail_item_menu, menu);
-        }
-    }
-    
-    @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
@@ -267,7 +255,7 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
                 return super.onContextItemSelected(item);
         }
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();
@@ -276,7 +264,7 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
 
     /**
      * Creates and returns an instance of authenticator used to get access to endpoint.
-     * 
+     *
      * @return authenticator.
      */
     protected AbstractOfficeAuthenticator getAuthenticator() {
@@ -289,13 +277,13 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
             protected Activity getActivity() {
                 return ItemsFragment.this.getActivity();
             }
-            
+
             @Override
             public void onDone(String result) {
                 super.onDone(result);
                 AuthPreferences.storeCredentials(getCredentials().setToken(result));
             }
-            
+
             @Override
             public void onError(Throwable error) {
                 super.onError(error);
@@ -303,9 +291,9 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
             }
         };
     }
-    
+
     public abstract void onError(Throwable t);
-    
+
     /**
      * Returns TEST or RELEASE version of end point to retrieve list of emails in the inbox depending on {@link Configuration#DEBUG}
      * constant value.
@@ -315,13 +303,13 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
     private String getEndpoint() {
         return Constants.OUTLOOK_ODATA_ENDPOINT;
     }
-    
+
     /**
      * Sets application configuration, like endpoint and credentials.
      */
     protected void setPreferences() {
         com.microsoft.office.core.Configuration.setServerBaseUrl(getEndpoint());
-    
+
         OfficeCredentials creds = (OfficeCredentials) AuthPreferences.loadCredentials();
         // First timer
         if (creds == null) {
@@ -330,11 +318,11 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
             creds.setAuthType(AuthType.OAUTH);
             AuthPreferences.storeCredentials(creds);
         }
-    
+
         mOfficeAuthenticator = getAuthenticator();
         com.microsoft.office.core.Configuration.setAuthenticator(mOfficeAuthenticator);
     }
-    
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -342,5 +330,5 @@ public abstract class ItemsFragment extends ListFragment<MailItem, MailItemAdapt
             mOfficeAuthenticator.onActivityResult(requestCode, resultCode, data);
         }
     }
-    
+
 }

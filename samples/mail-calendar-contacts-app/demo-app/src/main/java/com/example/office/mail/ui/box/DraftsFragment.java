@@ -26,7 +26,10 @@ import java.util.concurrent.TimeUnit;
 
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +55,7 @@ import com.msopentech.odatajclient.proxy.api.AsyncCall;
 public class DraftsFragment extends ItemsFragment implements IOperationCallback<List<IMessage>> {
 
     private boolean isInitializing = false;
-    
+
     /**
      * Handler to process actions on UI thread when async task is finished.
      */
@@ -70,13 +73,22 @@ public class DraftsFragment extends ItemsFragment implements IOperationCallback<
     protected UI.Screen getScreen() {
         return UI.Screen.MAILBOX;
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();
         if (!isInitializing) {
             initList();
             isInitializing = true;
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId() == getListViewId()) {
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.mail_item_menu, menu);
         }
     }
 
