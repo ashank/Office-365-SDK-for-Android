@@ -25,7 +25,6 @@ local.properties
 # generated files
 bin/
 gen/
-libs/
 
 # Ignore gradle files
 .gradle/
